@@ -390,17 +390,17 @@ public class BPM_Elements
 			//list_View.rightSideMenu(driver, "BPM Process");
 			Thread.sleep(4000);
 			clickOnActivities(driver);
-			System.out.println("clickOnActivities");
+			
 			//list_View.rightSideMenu(driver, "BPM Process");
 			clickOnCloseBtnOnActivities(driver);
-			System.out.println("clickOnCloseBtnOnActivities1");
+			
 			//UtilityClass.CheckPageLoaded();
 			Thread.sleep(5000);
 			clickOnHistory();
-			System.out.println("clickOnHistory");
+			
 			Thread.sleep(3000);
 			String status = getStatusInHistorySubPanel();
-			System.out.println("getStatusInHistorySubPanel()");
+			
 			//System.out.println(status);
 			soft.assertEquals(status, "Completed");
 			soft.assertAll();
