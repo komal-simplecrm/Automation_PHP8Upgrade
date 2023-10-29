@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite"  >
+<parameter name="browserName" value="Chrome" />
+<listeners>
+<listener class-name = "Listeners1.Listeners"/>
+</listeners>
+
+  <test name="Test1">
+  <parameter name="browserName" value="Chrome" />
+   
+      <classes>
+      
+   	   			<class name="Contacts_Module.ContactsTestClass"/>
+      			<class name="Opportunities_Module.OpportunitiesTestClass"/>
+      			<class name="Account_Module.AccountTestClass"/>
+       			<class name="Calls_Module.CallsTestClass"/>
+        		<class name="Task_Module.TaskTestClass"/>
+ 				<class name="Lead_Module.LeadTestClass"/>
+				<class name="Cases_Module.CasesTestClass"/>
+				<class name="Documents_Module.DocumentsTestClass"/>
+				<class name="Meeting_Module.MeetingsTestClass"/>
+				<class name="Quotes_Module.QuotesTestClass"/>
+				<class name="Invoice_Module.InvoiceTestClass"/>
+				<class name="Feedback_Module.FeedbackTestClass"/>
+             	<class name="Bugs_Module.BugsTestClass"/>
+             	<class name="SalesFlow.SupportFlowTestClass"/>
+             	<class name="SalesFlow.SalesFlowTestClass"/>
+             	<class name="SalesFlow.OpportunityToFeedbackFlow"/>
+              	<class name="Notes_Module.NotesTestClass"/>
+         		<class name="Partner_Contacts_Module.Partner_ContactsTestClass"/>
+
+    	
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
