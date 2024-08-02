@@ -1,19 +1,14 @@
 package POM_Cases_Module;
 
-
-
-
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
+import Library_Files.CommonFunctions;
 
 public class Create_Case {
 			//Data members should be declare globally with access level private by using @FindBy annotation
@@ -32,9 +27,10 @@ public class Create_Case {
 			//Back to ListView 
 			@FindBy(xpath="//span[@id='back-btn-link']") private WebElement Cases;
 			//Suggestion
-			@FindBy(xpath="//*[local-name()='svg' and @title='Suggestions']") private WebElement BulbIcon;
-			@FindBy(xpath="//form[@id='relate-search-form']//input[@id='name']")private WebElement windowName;
-			@FindBy(xpath="//form[@id='relate-search-form']//span[text()='Reset']") private WebElement ResetBtn;
+			//@FindBy(xpath="//*[local-name()='svg' and @title='Suggestions']") private WebElement BulbIcon;
+			@FindBy(xpath="//button[@title='Subject']") private WebElement BulbIcon;
+			@FindBy(xpath="//div[@role='dialog']//input[@id='name']")private WebElement windowName;
+			@FindBy(xpath="//div[@role='dialog']//span[text()='Reset']") private WebElement ResetBtn;
 			@FindBy(xpath="//span[text()='Search']")private WebElement SearchOnWindow;
 			@FindBy(xpath="//button[@aria-label='settings']")private WebElement SettingInListView;
 			@FindBy(xpath="//form[@id='filter-form']//span[text()='Reset']") private WebElement ResetBtnOnFilter;
@@ -115,9 +111,17 @@ public class Create_Case {
 					driver.findElement(By.xpath("//ul[@role='listbox']//li[contains(text(),'"+type+"')]")).click();
 				}
 				
-				public void clickOnGeneralFeedbackforSubject()
+				public void clickOnGeneralFeedbackforSubject(WebDriver driver, String subject) throws InterruptedException
 				{
 					Subject.click();
+					WebElement selectedsubjectclear = driver.findElement(By.xpath("//input[@id='name']"));
+					String SuggestedSubject = CommonFunctions.GetText(selectedsubjectclear);
+					System.out.println("Suggested Subject "+SuggestedSubject);
+					Thread.sleep(2000);
+					String s = Keys.chord(Keys.CONTROL, "a");
+					selectedsubjectclear.sendKeys(s);
+					selectedsubjectclear.sendKeys(Keys.DELETE);
+					selectedsubjectclear.sendKeys(subject);
 				}
 				
 				public void enterLinkedin_account(String linkedin_account)

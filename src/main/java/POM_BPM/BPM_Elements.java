@@ -9,13 +9,9 @@ import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import org.testng.asserts.SoftAssert;
-
-import Library_Files.UtilityClass;
 import POM_Lead_Module.Lead_ListView;
 
 
@@ -159,7 +155,7 @@ public class BPM_Elements
 					color = "Green";
 					//return color;
 			
-				} else  if (backgroundColor.equalsIgnoreCase("rgba(255, 193, 7, 1)"))
+				} else  if (backgroundColor.equalsIgnoreCase("rgba(225, 173, 1, 1)"))//255, 193, 7, 1
 				{
 					System.out.println("Color did not change to green");
 					color = "Yellow";
@@ -225,7 +221,7 @@ public class BPM_Elements
 		{ 
 			
 			 User1[0] = "Rahul Thakre";
-			 User1[1] = "admin123";
+			 User1[1] = "Rahul@123";
 			//return User1;
 		}
 		return User1;

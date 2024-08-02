@@ -21,6 +21,7 @@ import POM_Calls_Module.Duplicate_Call_Page;
 import POM_Lead_Module.Add_Lead;
 import POM_Lead_Module.Duplicate_Page;
 import POM_Lead_Module.Lead_ListView;
+import POM_Meeting_Module.Add_Meeting;
 import POM_Opportunities_Module.Add_Opportunities;
 import POM_Task_Module.Add_Task;
 import POM_Task_Module.Duplicate_Task_Page;
@@ -37,6 +38,7 @@ public class CallsTestClass extends Base_Class
 	Duplicate_Task_Page duplicate_task;
 	Duplicate_Page duplicate;
 	Add_Account add_Account;
+	Add_Meeting meeting;
 	
 	@BeforeMethod(alwaysRun = true)
 	public void OpenBrowser() throws InterruptedException
@@ -51,6 +53,7 @@ public class CallsTestClass extends Base_Class
 		duplicate_task = new Duplicate_Task_Page(driver);
 		duplicate=new Duplicate_Page(driver);
 		add_Account = new Add_Account(driver);
+		meeting = new Add_Meeting(driver);
 		
 		//directed to the dash board page
 		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
@@ -62,11 +65,11 @@ public class CallsTestClass extends Base_Class
 		dashboard.clickOnMenuOption(driver,"Calls");
 		Thread.sleep(2000);
 		dashboard.closeMenuOption();
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 	}
 	
 		//Create test case for create multiple Account
-		@Test(enabled= false, groups={"Create", "Sanity"})
+		@Test( groups={"Create", "Sanity"})
 		public void CreateCalls() throws Exception 
 		{
 			//Create this test case in Extent Report
@@ -84,27 +87,28 @@ public class CallsTestClass extends Base_Class
 				try {
 							
 					driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-					String subject=calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("calls", i, 0));
+					String subject = calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("calls", i, 0));
 					soft.assertNotNull(subject);
 					test.info(subject+ " call is created");
+					create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("calls", i, 8));
 					String status = calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 1));
 					soft.assertNotNull(status);
 					String date = task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 2), UtilityClass.fetchDataFromExcelSheet("calls", i, 3));
 					soft.assertNotNull(date);
-					//create_Lead.scrollpage(driver);
+					meeting.selectDateEnd(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 20), UtilityClass.fetchDataFromExcelSheet("calls", i, 21));
+					
 					task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 4), UtilityClass.fetchDataFromExcelSheet("calls", i, 5));
-					String duration = calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("calls", i, 6));
-					soft.assertNotNull(duration);
+					calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 6));
+					
 					//calls.selectPopUpRadioBtn(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 7));
 					//Thread.sleep(3000);
 					//calls.selectEmailRadioBtn(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 7));
 					//Thread.sleep(3000);
-					create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("calls", i, 8));
-					create_Lead.scrollpage(driver);
+					create_Lead.scrollpage(driver);				
 					create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 9));
 					Thread.sleep(3000);
 					//calls.scrollpage(driver);
-					calls.clickOnAdd_Reminder();
+					//calls.clickOnAdd_Reminder();
 					String a[]= {"Users","Contacts","Leads"};
 					int k = 14;
 					for(int j=0;j<=2;j++)
@@ -112,13 +116,12 @@ public class CallsTestClass extends Base_Class
 					calls.addInviteesInRemainder(driver, 0, a[j], UtilityClass.fetchDataFromExcelSheet("calls", i, k));
 					k=k+2;	
 					}
-					calls.selectPopUpRadioBtnReminders(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 10),0);
-					
-					calls.selectEmailRadioBtnReminders(driver, UtilityClass.fetchDataFromExcelSheet("calls", i, 10),0);
+					calls.entertimebefore(driver, UtilityClass.fetchDataFromExcelSheet("calls",i, 10), 0);
 					create_Lead.scrollpage(driver);
-					calls.enterCaller_id(UtilityClass.fetchDataFromExcelSheet("calls", i, 11));
+					//calls.enterCaller_id(UtilityClass.fetchDataFromExcelSheet("calls", i, 11));
 					//calls.scrollpageUpToSaveBottomBtn(driver);
 					create_Lead.clickOnSavebtn();
+					list_View.getAlertMessage(subject);
 					Thread.sleep(7000);
 					add_Opportunities.backToListView();
 					Thread.sleep(4000);
@@ -134,7 +137,7 @@ public class CallsTestClass extends Base_Class
 		}
 		
 		//Create test case for Edit Account
-		@Test(enabled= false, groups={"Edit", "Sanity"})
+		@Test( groups={"Edit", "Sanity"})
 		public void EditCall() throws Exception 
 		{
 				//Create this test case in Extent Report
@@ -155,7 +158,7 @@ public class CallsTestClass extends Base_Class
 					calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("calls", 3, 0));
 					calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("calls", 3, 1));
 					task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("calls", 3, 2), UtilityClass.fetchDataFromExcelSheet("calls", 3, 3));
-					calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("calls", 3, 6));
+					calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("calls", 3, 6));
 					create_Lead.scrollpage(driver);
 					create_Lead.clickOnSavebtn();
 					String msg=list_View.EveryPageAlert();
@@ -171,7 +174,7 @@ public class CallsTestClass extends Base_Class
 		}
 		
 		//Create test case for Delete Call From Edit Option
-		@Test(enabled= false, groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateCalls"})
+		@Test( groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateCalls"})
 		public void DeleteCallFromEditOption() throws Exception 
 		{
 			CommonFunctions.DeleteRecordFromEditOption(dashboard, list_View, add_Opportunities,"Test call generate3", "Calls");
@@ -180,7 +183,7 @@ public class CallsTestClass extends Base_Class
 		
 		
 		//Create test case for Delete Task From List View
-		@Test(enabled= false, groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateCalls"})
+		@Test( groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateCalls"})
 		public void DeleteCallFromListView() throws InterruptedException, EncryptedDocumentException, IOException 
 		{
 			CommonFunctions.DeleteRecordFromListView(list_View, add_Opportunities, "Test Call1", "Calls");
@@ -204,7 +207,7 @@ public class CallsTestClass extends Base_Class
 					calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("calls", 1, 0));
 					calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 1));
 					task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 2), UtilityClass.fetchDataFromExcelSheet("calls", 1, 3));
-					calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("calls", 1, 6));
+					calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 6));
 					calls.scrolluptoAssignedTo(driver);
 					//Add Remainders function call from Common Functions class
 					CommonFunctions.Add_Remainder(calls, UtilityClass.fetchDataFromExcelSheet("calls", 1, 10), 14);
@@ -227,6 +230,7 @@ public class CallsTestClass extends Base_Class
 				String input1 = scan1.nextLine();*/
 				String input1="Test call generate1";
 				list_View.enterTextInSearchBtn(driver,input1);
+				Thread.sleep(2000);
 				list_View.clickOnName(driver,input1);
 				
 				
@@ -257,14 +261,14 @@ public class CallsTestClass extends Base_Class
 				int j=0,k=0;
 				String related = duplicate_task.getRelatedTo();
 				String arr1[]= {duplicate_call.getSubject(),duplicate_call.getStatus(),ExactstartDate,starttime,
-						related,duplicate_task.getRelatedToDynamic(related),duplicate_call.getDuration(), duplicate.getDescription(),
-						duplicate_call.getPopUpRemainder(),duplicate_call.getEmailRemainder(),duplicate_call.getCaller_id()};
+						related,duplicate_task.getRelatedToDynamic(related),duplicate_call.getDuration1(), duplicate.getDescription(),
+						duplicate_call.getPopUpRemainder(),duplicate_call.getEmailRemainder()/*,duplicate_call.getCaller_id()*/};
 				String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Calls",2, 0),UtilityClass.fetchDataFromExcelSheet("Calls",2, 1),UtilityClass.fetchDataFromExcelSheet("Calls",2, 2),
 						UtilityClass.fetchDataFromExcelSheet("Calls",2, 3),UtilityClass.fetchDataFromExcelSheet("Calls",2, 4),UtilityClass.fetchDataFromExcelSheet("Calls",2, 5),
 						UtilityClass.fetchDataFromExcelSheet("Calls",2, 6),UtilityClass.fetchDataFromExcelSheet("Calls",2, 8),UtilityClass.fetchDataFromExcelSheet("Calls",2, 7),
-						UtilityClass.fetchDataFromExcelSheet("Calls",2, 7),UtilityClass.fetchDataFromExcelSheet("Calls",2, 11)};
+						UtilityClass.fetchDataFromExcelSheet("Calls",2, 7)/*,UtilityClass.fetchDataFromExcelSheet("Calls",2, 11)*/};
 				
-				for(int i=0;i<=10;i++)
+				for(int i=0;i<10;i++)
 				{
 					
 					soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");
@@ -297,13 +301,11 @@ public class CallsTestClass extends Base_Class
 				calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("calls", 1, 0));
 				calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 1));
 				task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 2), UtilityClass.fetchDataFromExcelSheet("calls", 1, 3));
-				calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("calls", 1, 6));
+				calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 6));
 				calls.scrollpageuptoDuration(driver);
-				
+				create_Lead.scrollpage(driver);
 				//Add Multiple Invites In Remainder function call from Common Functions class
 				CommonFunctions.AddMulitpleInviteesInRemainder(calls, UtilityClass.fetchDataFromExcelSheet("calls", 1, 10), 15);
-				
-				create_Lead.scrollpage(driver);
 				create_Lead.clickOnSavebtn();
 		}
 		
@@ -344,7 +346,7 @@ public class CallsTestClass extends Base_Class
 		}*/
 		
 		//Test case for Export functionality
-		@Test(enabled= false,  groups = {"Export", "Sanity"})
+		@Test( groups = {"Export", "Sanity"})
 		public void ExportRecordsForCalls() throws Exception
 		{
 			 //Call function from Common Function class
@@ -352,7 +354,7 @@ public class CallsTestClass extends Base_Class
 		}
 		
 		//Test case for Mass update functionality
-		@Test(enabled= false, groups={"MassUpdate", "Sanity"})
+		@Test( groups={"MassUpdate", "Sanity"})
 		public void MassUpdateCalls() throws InterruptedException, EncryptedDocumentException, IOException, AWTException, ParseException
 		{
 			

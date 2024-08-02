@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import Library_Files.CommonFunctions;
 import Library_Files.UtilityClass;
 
 public class Add_Meeting 
@@ -15,7 +16,7 @@ public class Add_Meeting
 		//Data members should be declare globally with access level private by using @FindBy annotation
 		@FindBy(xpath="//button[@id='date_end']") private WebElement Date_end;
 		@FindBy(xpath="//input[@id='location']") private WebElement Location;
-		@FindBy(xpath="//div[@id='duration']") private WebElement Duration;
+		@FindBy(xpath="//input[@id='duration']") private WebElement Duration;
 		
 		
 		//Xpath for Duplicate functionality
@@ -42,13 +43,7 @@ public class Add_Meeting
 			Location.sendKeys(location);
 		}
 
-		public void selectDuration(WebDriver driver, String duration) throws InterruptedException
-		{
-			Duration.click();
-			Thread.sleep(2000);
-			driver.findElement(By.xpath("//ul[@role='listbox']//li//span[text()='"+duration+"']")).click();
-		}
-
+		
 		//Get the data for Duplicate Functionality not created separate class
 		public String[] getDateEnd()
 		{
@@ -67,7 +62,8 @@ public class Add_Meeting
 
 		public String getDuration()
 		{
-			String duration = Duration.getText();
+			String duration = CommonFunctions.GetText(Duration);
+			System.out.println("duration "+duration);
 			return duration;
 		}
 		//i = number of invites

@@ -1,21 +1,13 @@
 package POM_Lead_Module;
 
-
-
-
-
-
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import java.time.Duration;
 import Library_Files.UtilityClass;
 
 public class Add_Lead 
@@ -41,7 +33,7 @@ public class Add_Lead
 			@FindBy(xpath="//input[@id='primary_address_country']")private WebElement Country;
 			@FindBy(xpath="//input[@id='primary_address_city']")private WebElement City;
 			@FindBy(xpath="(//input[@id='alt_address_street'])[2]")private WebElement CopyFromleftCheckBox;
-			@FindBy(xpath="//input[@id='email10']")private WebElement EmailAddress;
+			@FindBy(xpath="//input[@id='email1-0']")private WebElement EmailAddress;
 			@FindBy(xpath="(//button[@type='submit']//span[text()='Save'])[2]")private WebElement SaveBtn;
 			@FindBy(xpath="//span[@id='back-btn-link']")private WebElement lead;
 			@FindBy(xpath="//textarea[@id='description']")private WebElement Description;
@@ -58,6 +50,7 @@ public class Add_Lead
 			@FindBy(xpath="//button[@form='relate-search-form']")private WebElement SearchOnWindow;
 			@FindBy(xpath="//div[@role='dialog']//input[@id='first_name']")private WebElement windowFirstName;
 			@FindBy(xpath="//div[@role='dialog']//input[@id='last_name']")private WebElement LastNameOnWindow;
+			@FindBy(xpath="//input[@id='lead_scoring_c']")private WebElement LeadScore;
 			//Xpath of Campaign field
 			
 			@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-campaign_name']")private WebElement CampaignSearchIcon;
@@ -69,7 +62,7 @@ public class Add_Lead
 			@FindBy(xpath="//input[@id='invalid0']")private WebElement Invalid;
 			
 			//Assigned To
-			@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-assigned_user_name']")private WebElement AssignedToSearchIcon;
+			@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-assigned_user_name']")private WebElement AssignedToSearchIcon;
 			
 			//Initialize the constructor with access level public using PageFactory class
 			public Add_Lead(WebDriver driver)
@@ -94,6 +87,12 @@ public class Add_Lead
 				FirstName.sendKeys(s);
 				FirstName.sendKeys(Keys.DELETE);
 				FirstName.sendKeys(firstname);
+			}
+			public void enterFirstName(String firstname,String Time )
+			{	String s = Keys.chord(Keys.CONTROL, "a");
+				FirstName.sendKeys(s);
+				FirstName.sendKeys(Keys.DELETE);
+				FirstName.sendKeys(firstname+Time);
 			}
 			public String enterLastName(WebDriver driver,String lastname) throws InterruptedException
 			{	String s = Keys.chord(Keys.CONTROL, "a");
@@ -125,6 +124,10 @@ public class Add_Lead
 			public void enterMobile(String mobile)
 			{
 				Mobile.sendKeys(mobile);
+			}
+			public void enterLeadScore(String leadScore)
+			{
+				LeadScore.sendKeys(leadScore);
 			}
 			public void enterDepartment(String department)
 			{
@@ -202,7 +205,7 @@ public class Add_Lead
 			public void ScrollPage(WebDriver driver)
 			{
 				//To scroll down upto EmailAddress field is showing
-				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",CampaignSearchIcon);
+				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",ApprovalStatus);
 				
 			}
 			public void clickLead()
@@ -349,7 +352,7 @@ public class Add_Lead
 			    	WebElement PlusIcon=driver.findElement(By.xpath("//*[local-name()='svg' and @id='add-email-btn-"+k+"']"));
 			    	UtilityClass.wait_until_element_found(driver, PlusIcon);
 			    	PlusIcon.click();
-			    	driver.findElement(By.xpath("//input[contains(@id,'email"+l+"')]")).sendKeys(secondaryemailaddress);
+			    	driver.findElement(By.xpath("//input[contains(@id,'email1-"+l+"')]")).sendKeys(secondaryemailaddress);
 			    	
 			    	return true;
 			    		
@@ -364,7 +367,7 @@ public class Add_Lead
 				
 				
 				if(i==1) {
-					WebElement primary=driver.findElement(By.xpath("//input[contains(@id,'email10')]"));
+					WebElement primary=driver.findElement(By.xpath("//input[contains(@id,'email1-0')]"));
 				String primaryemail=primary.getAttribute("value");
 				System.out.println(primaryemail+"is by default Primary email address");
 				
@@ -379,7 +382,7 @@ public class Add_Lead
 			    	act.click().perform();
 			    	//driver.switchTo().parentFrame();
 			    	Thread.sleep(2000);
-			    	WebElement email = driver.findElement(By.xpath("//input[contains(@id,'email"+l+"')]"));
+			    	WebElement email = driver.findElement(By.xpath("//input[contains(@id,'email1-"+i+"')]"));
 			    	act.moveToElement(email).perform();
 			    	act.click().perform();
 			    	email.sendKeys(secondaryemailaddress);
@@ -406,7 +409,7 @@ public class Add_Lead
 			    	act.click().perform();
 			    	//driver.switchTo().parentFrame();
 			    	Thread.sleep(2000);
-			    	WebElement email = driver.findElement(By.xpath("//input[contains(@id,'email"+l+"')]"));
+			    	WebElement email = driver.findElement(By.xpath("//input[contains(@id,'email1-"+l+"')]"));
 			    	act.moveToElement(email).perform();
 			    	act.click().perform();
 			    	email.sendKeys(secondaryemailaddress);

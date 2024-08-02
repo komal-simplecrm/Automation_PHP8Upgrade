@@ -1,8 +1,5 @@
 package POM_Lead_Module;
 
-
-
-
 import java.awt.AWTException;
 import java.text.ParseException;
 import java.util.List;
@@ -21,13 +18,10 @@ import Library_Files.Base_Class;
 import Library_Files.UtilityClass;
 import POM_Account_Module.Add_Account;
 import POM_Filter.FilterData;
-import java.time.Duration;
-
-
-
 
 public class Lead_ListView extends Base_Class
 {
+	String msg;
 	SoftAssert soft = new SoftAssert();
 	FilterData filter = new FilterData(driver);
 	Add_Account add_Account = new Add_Account(driver);
@@ -40,7 +34,8 @@ public class Lead_ListView extends Base_Class
 	//@FindBy(xpath="//input[@id='MUIDataTableSelectCell-0']")private WebElement CheckBox;
 	@FindBy(xpath="//a[contains(text(),'Mr. John Patel')]/parent::p/../..")private WebElement leadName;
 	@FindBy(xpath="//button[@title='Edit Record']")private WebElement Edit;
-	@FindBy(xpath="//input[@aria-label='search']")private WebElement SearchBtn;
+	//@FindBy(xpath="//input[@aria-label='search']")private WebElement SearchBtn;
+	@FindBy(xpath="//input[contains(@placeholder,'Search with')]")private WebElement SearchBtn;
 	@FindBy(xpath="//button[@type='submit']")private WebElement Searchicon;
 	@FindBy(xpath="//span[text()='Delete']")private WebElement Delete;
 	@FindBy(xpath="//span[text()='Yes']")private WebElement Yes;
@@ -75,7 +70,10 @@ public class Lead_ListView extends Base_Class
 	//button[@title='Filter Drawer keep to be unlock']
 	//Xpaths of Export
 	@FindBy(xpath="//span[text()='Export']") private WebElement Export;
-	@FindBy(xpath="//div[@aria-labelledby='alert-dialog-title']//span[text()='Yes']") private WebElement ExportYes;
+	@FindBy(xpath="//span[text()='Bulk Action']") private WebElement Bulk_Action;
+	@FindBy(xpath="//div[contains(@class,'MuiAlert-message')]") private WebElement Alert_Message;
+	@FindBy(xpath="//input[@id='select_all_field']") private WebElement SelectAllField;
+	@FindBy(xpath="//input[@id='field_selection']") private WebElement SelectFields;
 	@FindBy(xpath="(//div[@id='scrollableDiv']//div[contains(@class,'MuiAvatar-circular')])[1]") private WebElement ModuleIcon;
 	@FindBy(xpath="//span[text()='Download available!']") private WebElement Download_available;
 	//@FindBy(xpath="//button[@id='download-btn-0']") private WebElement DownLoadFileBtn;
@@ -153,20 +151,20 @@ public class Lead_ListView extends Base_Class
 	}
 	public void clickOnDelete()
 	{   
-		
+		SelectBulkAction(driver, "Delete");
 		Delete.click();
-		Yes.click();
+		//Yes.click();
 	}
 	public void menu(WebDriver driver,String option) throws InterruptedException
 	{
 		Menu.click();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//ul[@role='menu']//li//span[contains(text(),'"+option+"')]")).click();
+		driver.findElement(By.xpath("//ul[@role='menu']//li//div[contains(text(),'"+option+"')]")).click();
 		//MenuDelete.click();
 	}
 	public void confirmDelete()
 	{
-		Yes.click();
+		Delete.click();
 	}
 	public String EveryPageAlert()
 	{
@@ -187,21 +185,26 @@ public class Lead_ListView extends Base_Class
 		WebElement Leadname=driver.findElement(By.xpath("//tbody//tr//td[@data-tableid='ListViewTable']//p//a[contains(text(),'"+LeadName+"')]"));
 		String leadname=Leadname.getText();
 		return leadname;
-	
-	
+		
 	}
 	public void scrollUpToMenu(WebDriver driver)
 	{
 		((JavascriptExecutor)driver).executeScript("scrollRight = arguments[0]. offsetWidth", Menu);
 	}
 
+	public void SelectBulkAction(WebDriver driver, String Actions)
+	{
+		Bulk_Action.click();
+		WebElement action = driver.findElement(By.xpath("//ul[@role='menu']//li[text()='"+Actions+"']"));
+		action.click();
+	}
 	
 	//Function to get the Notification count
 	public String getNotification()
 	{
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		WebElement count = driver.findElement(By.xpath("(//header//span[@title='Notifications']//span)[3]"));
-		//WebElement element = driver.findElement(By.xpath("element_xpath"));
+		//WebElement count = driver.findElement(By.xpath("(//header//span[@title='Notifications']//span)[3]"));
+		WebElement count = driver.findElement(By.xpath("//header//button[@title='Notifications']/..//span[contains(@class,'anchorOriginTopRightRectangle')]"));
 		String elementText = (String) js.executeScript("return arguments[0].innerText;", count);
 		return elementText;
 	}
@@ -213,15 +216,16 @@ public class Lead_ListView extends Base_Class
 		//Get count of check boxes which contains the subject
 		List<WebElement> rows = driver.findElements(By.xpath("//tbody//td[@data-tableid='ListViewTable']//a[contains(text(),'"+subject+"')]"));
 		int count = rows.size();
-		System.out.println("ROW COUNT : "+count);
+		System.out.println("Row Count: "+count);
 		Thread.sleep(2000);
 		//Click on All select check box in the header
 		driver.findElement(By.xpath("//span[@data-description='row-select-header']")).click();
 		Thread.sleep(2000);
 		//Get count of all check boxes 
-		String totalCount = driver.findElement(By.xpath("//button[@aria-label='settings']/..//span[contains(@class,'anchorOriginTopRightCircular')]")).getText();
+		//String totalCount = driver.findElement(By.xpath("//button[@aria-label='settings']/..//span[contains(@class,'anchorOriginTopRightCircular')]")).getText();
+		String totalCount = driver.findElement(By.xpath("//th//span[contains(@class,'anchorOriginTopRightRectangle')]")).getText();
 		int totalcount = Integer.parseInt(totalCount);
-		
+		System.out.println("Total Count: "+totalcount);
 		//Apply assertion the count of check boxes containing subject equals to count of total check box selected.
 		//soft.assertEquals(count, totalcount);
 		//soft.assertAll();
@@ -268,7 +272,8 @@ public class Lead_ListView extends Base_Class
 		clickOnCheckBoxes(subject);
 		//driver.findElement(By.xpath("//span[@data-description='row-select-header']")).click();
 		//Click on the Mass update button
-		MassUpdate.click();
+		//MassUpdate.click();
+		SelectBulkAction(driver, "Mass update");
 		Thread.sleep(1000);
 		//Click on search icon of Assigned to field
 		AssignedToIconOnMassUpdate.click();
@@ -306,8 +311,9 @@ public class Lead_ListView extends Base_Class
 		Thread.sleep(2000);
 		SavebtnOnMassUpdate.click();
 		//Call the get List view data function to verify the record is assigned to the correct user or not.
-		FilterData.getListViewData("Assigned to" , assignedTo );
-		
+		//FilterData.getListViewData("Assigned to" , assignedTo );
+		Thread.sleep(7000);
+		massupdate(driver, "Assigned to",assignedTo);
 	}
 	
 	//Special function for Cases and Documents module record search.
@@ -347,7 +353,7 @@ public class Lead_ListView extends Base_Class
 	public void ExportAllRecords(WebDriver driver, String subject, String Title) throws InterruptedException
 	{
 		
-		WebElement notify = driver.findElement(By.xpath("//span[@title='Notifications']"));
+		//WebElement notify = driver.findElement(By.xpath("//header//button[@title='Notifications']"));
 		ClickOnNotification();
 		Thread.sleep(2000);
 		
@@ -364,13 +370,18 @@ public class Lead_ListView extends Base_Class
 		//Call the function to get the count of records and click on the check boxes in list view
 		clickOnCheckBoxes(subject);
 		
-		Export.click();
+		SelectBulkAction(driver, "Export");
 		Thread.sleep(2000);
-		ExportYes.click();
+		String message = Alert_Message.getText();
+		test.info(message+ " Message displayed on Export Pop-up.");
+		SelectAllField.click();
+		Boolean fieldStatus = SelectFields.isDisplayed();
+		test.info(fieldStatus+ "Check Select Field Status");
+		Export.click();
 		
 		Thread.sleep(5000);
 		
-		UtilityClass.CheckPageLoaded();
+		driver.navigate().refresh();
 		
 		String notificationcount1 = getNotification();
 		int Ncount2 = Integer.parseInt(notificationcount1);
@@ -449,7 +460,7 @@ public class Lead_ListView extends Base_Class
 		int attempts = 0;
 		while (attempts < MAX_ATTEMPTS) {
 		    try {
-		    	WebElement notify = driver.findElement(By.xpath("//span[@title='Notifications']"));
+		    	WebElement notify = driver.findElement(By.xpath("//header//button[@title='Notifications']"));
 		    	notify.click();
 		        
 		        break;
@@ -616,9 +627,66 @@ public class Lead_ListView extends Base_Class
 		act.click(menu).perform();
 		//Menu.click();
 		Thread.sleep(2000);
-		WebElement options = driver.findElement(By.xpath("//ul[@role='menu']//li//span[contains(text(),'"+option+"')]"));
+		WebElement options = driver.findElement(By.xpath("//ul[@role='menu']//li//div[contains(text(),'"+option+"')]"));
 		//MenuDelete.click();
 		act.click(options).perform();
 	}
 	
+	public void massupdate(WebDriver driver, String ColumnName, String assignedto)
+	{
+		WebElement data = driver.findElement(By.xpath("//div[text()='"+ColumnName+"']/parent::td//a"));
+		String UserName = data.getText();
+		System.out.println(ColumnName+ "Data present:"+UserName);
+		soft.assertEquals(assignedto, UserName);
+		soft.assertAll();
+	}
+	
+	public void expandButton()
+	{
+		List<WebElement> expand = driver.findElements(By.xpath("//div[contains(@class,'expandIcon')]"));
+		int j=1;
+		
+	
+		for (WebElement i : expand) 
+		{
+			System.out.println("Panel number = "+i);
+			WebElement result = driver.findElement(By.xpath("(//div[contains(@class,'expandIcon')])["+j+"]"));
+			boolean Panel = result.isEnabled();
+			
+			if(Panel = false)
+			{
+				System.out.println("Panels are not collapsed");
+			}
+			else 
+			{
+				result.click();
+				System.out.println("Panels are collapse");
+					
+			}
+		}
+		
+	}
+	
+	public void getAlertMessage(String Name)
+	{
+		boolean found = false;
+		try {
+			Thread.sleep(2000);
+			msg = EveryPageAlert();
+			found = msg.contains("Oops");
+		}
+		catch(Exception e)
+		{
+			test.info(" Toast msg is not appear.");
+		}
+		
+		if(found==true)
+		{
+			test.info(msg+ " Record not saved this message showing on CRM");
+		}
+		else 
+		{
+			test.info(Name+" record is created successfully.");
+		}
+	}
 }

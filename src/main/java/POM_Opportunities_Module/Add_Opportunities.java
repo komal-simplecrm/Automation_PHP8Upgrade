@@ -19,8 +19,8 @@ public class Add_Opportunities
 {
 	//Data members should be declare globally with access level private by using @findBy annotation
 		@FindBy(xpath="//input[@id='name']")private WebElement Name;
-		@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-account_name']")private WebElement AccountNameSerachIcon;
-		@FindBy(xpath="//div[@id='currency_id']")private WebElement Currency;
+		@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-account_name']")private WebElement AccountNameSerachIcon;
+		@FindBy(xpath="//input[@id='currency_id']")private WebElement Currency;
 		@FindBy(xpath="//input[@id='date_closed']")private WebElement Date_closed;
 		@FindBy(xpath="//button[@id='date_closed']")private WebElement Expected_Date_closed;
 		@FindBy(xpath="//input[@id='amount']")private WebElement OpportunityAmount;
@@ -162,9 +162,9 @@ public class Add_Opportunities
 				UtilityClass.selectDates(driver, Actualdate, "dd-MMM-yyyy");
 				Thread.sleep(5000);
 				String s4 = Keys.chord(Keys.CONTROL, "a");
-				Description.sendKeys(s4);
-				Description.sendKeys(Keys.DELETE);
-				Description.sendKeys(description);
+				//Description.sendKeys(s4);
+				//Description.sendKeys(Keys.DELETE);
+				//Description.sendKeys(description);
 				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", Type);
 			}
 			return salesStage;
@@ -189,13 +189,13 @@ public class Add_Opportunities
 		{
 			Probability.sendKeys(probability);
 		}
-		public void enterDescription(String description)
+		/*public void enterDescription(String description)
 		{
 			Description.sendKeys(description);
-		}
+		}*/
 		public String verifyOpportunityName(WebDriver driver,String name)
 		{
-			WebElement Oppname=driver.findElement(By.xpath("//tbody//td[@data-tableid='ListViewTable']//p//a[text()='"+name+"']"));
+			WebElement Oppname=driver.findElement(By.xpath("//tbody//td[@data-tableid='ListViewTable']//a[text()='"+name+"']"));
 			String Opportuityname=Oppname.getText();
 			System.out.println(Opportuityname);
 			return Opportuityname;

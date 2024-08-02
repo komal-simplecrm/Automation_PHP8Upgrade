@@ -13,9 +13,10 @@ public class Duplicate_Call_Page
 		@FindBy(xpath="//input[@id='name']") private WebElement Subject;
 		@FindBy(xpath="//input[@id='status']") private WebElement Status;
 		@FindBy(xpath="//input[@id='duration_hours']") private WebElement Duration_Hours;
+		@FindBy(xpath="//input[@id='duration']") private WebElement Duration;
 		@FindBy(xpath="//input[@id='asterisk_caller_id_c']") private WebElement Caller_id;
-		@FindBy(xpath="//div[@id='timer_popup0']") private WebElement Time_popup;
-		@FindBy(xpath="//div[@id='reminders']") private WebElement Reminders;
+		@FindBy(xpath="//input[@id='timer_popup0']") private WebElement Time_popup;
+		@FindBy(xpath="//input[@id='timer_email0']") private WebElement Reminders;
 		//Initialize the constructor with access level public using PageFactory class
 			public Duplicate_Call_Page(WebDriver driver)
 			{
@@ -38,10 +39,15 @@ public class Duplicate_Call_Page
 				String duration = Duration_Hours.getAttribute("value");
 				return duration;
 			}
+			public String getDuration1()
+			{
+				String duration = Duration.getAttribute("value");
+				return duration;
+			}
 			public String getPopUpRemainder()
 			{
 				String popupremainder = CommonFunctions.GetText(Time_popup);
-				
+				System.out.println("popupremainder "+popupremainder);
 				return popupremainder;
 			}
 			
@@ -49,7 +55,7 @@ public class Duplicate_Call_Page
 			{
 				String emailremainder = CommonFunctions.GetText(Reminders);
 				
-			
+				System.out.println("emailremainder "+emailremainder);
 				return emailremainder;
 			}
 			public String getCaller_id()

@@ -1,8 +1,5 @@
 package POM_Task_Module;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -10,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import Library_Files.UtilityClass;
 
 public class Add_Task 
@@ -20,11 +16,13 @@ public class Add_Task
 	@FindBy(xpath="//input[@id='status']")private WebElement Status;
 	@FindBy(xpath="//button[@id='date_start']")private WebElement Date_Start;
 	@FindBy(xpath="//input[@id='parent_name']")private WebElement RelatedTo;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-parent_name']")private WebElement RelatedToDynamic;
+	@FindBy(xpath="//input[@id='estimated_effort_c']")private WebElement Estimated_Effort;
+	@FindBy(xpath="//input[@id='effort_c']")private WebElement Actual_Effort;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-parent_name']")private WebElement RelatedToDynamic;
 	
 	@FindBy(xpath="//button[@form='relate-search-form']")private WebElement SearchBtnOnWindow1;
 	@FindBy(xpath="//button[@id='date_due']")private WebElement Date_Due;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-contact_name']")private WebElement ContachNameSearchIcon;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-contact_name']")private WebElement ContachNameSearchIcon;
 	@FindBy(xpath="//div[@role='dialog']//input[@id='first_name']")private WebElement FirstNameOnWindow;
 	@FindBy(xpath="//div[@role='dialog']//input[@id='last_name']")private WebElement LastNameOnWindow;
 	@FindBy(xpath="//span[text()='Search']")private WebElement SearchBtnOnWindow2;
@@ -39,7 +37,7 @@ public class Add_Task
 	
 	//Calls Module
 	@FindBy(xpath="//form[@id='filter-form']//input[@id='parent_name']")private WebElement FilterRelatedTo;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-parent_name']")private WebElement FilterRelatedToDynamic;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-parent_name']")private WebElement FilterRelatedToDynamic;
 		
 	//Initialize the constructor with access level public using PageFactory class
 	public Add_Task(WebDriver driver)
@@ -83,8 +81,8 @@ public class Add_Task
 		RelatedTo.click();
 		driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+relatedTo+"']")).click();
 		
-		if(relatedTo.equals("Account")||relatedTo.equals("Task")||relatedTo.equals("Opportunity")||relatedTo.equals("Project")||relatedTo.equals("Project Task")|| 
-				relatedTo.equals("Meeting")|| relatedTo.equals("Call")||relatedTo.equals("Quote")||relatedTo.equals("Invoice"))
+		if(relatedTo.equals("Accounts")||relatedTo.equals("Tasks")||relatedTo.equals("Opportunities")||relatedTo.equals("Projects")||relatedTo.equals("Project Tasks")|| 
+				relatedTo.equals("Meetings")|| relatedTo.equals("Calls")||relatedTo.equals("Quotes")||relatedTo.equals("Invoices"))
 		{
 			Thread.sleep(1000);
 			RelatedToDynamic.click();
@@ -93,7 +91,7 @@ public class Add_Task
 			Thread.sleep(4000);
 			driver.findElement(By.xpath("//table[@role='grid']//tbody//td//a[contains(text(),'"+name+"')]")).click();
 		}
-		else if(relatedTo.equals("Contact")|| relatedTo.equals("Lead")||relatedTo.equals("Target"))
+		else if(relatedTo.equals("Contacts")|| relatedTo.equals("Leads")||relatedTo.equals("Targets"))
 		{
 			RelatedToDynamic.click();
 			String[] sapratename = name.split(" ");
@@ -112,7 +110,7 @@ public class Add_Task
 			Thread.sleep(4000);
 			driver.findElement(By.xpath("//table[@role='grid']//tbody//td//a[contains(text(),'"+name+"')]")).click();
 		}
-		else if(relatedTo.equals("Bug"))
+		else if(relatedTo.equals("Bugs"))
 		{
 			RelatedToDynamic.click();
 			windowBugNumber.sendKeys(name);
@@ -121,7 +119,7 @@ public class Add_Task
 			//driver.findElement(By.xpath("//table[@role='grid']//tbody//td//div[text()='"+name+"']/../..//a")).click();
 			driver.findElement(By.xpath("//table[@role='grid']//tbody//td//div[text()='"+name+"']/../..//a")).click();
 		}
-		else if(relatedTo.equals("Ticket")||relatedTo.equals("Case"))
+		else if(relatedTo.equals("Tickets")||relatedTo.equals("Cases"))
 		{
 			RelatedToDynamic.click();
 			windowCaseNumber.sendKeys(name);
@@ -238,6 +236,24 @@ public class Add_Task
 		
 		String related = FilterRelatedTo.getAttribute("value");
 		return related;
+	}
+	
+	public void Estimate_Effort(String estimatedEffort)
+	{
+		String s = Keys.chord(Keys.CONTROL, "a");
+		Estimated_Effort.sendKeys(s);
+		Estimated_Effort.sendKeys(Keys.DELETE);
+		Estimated_Effort.sendKeys(estimatedEffort);
+		
+	}
+	
+	public void Effort(String effort)
+	{
+		String s = Keys.chord(Keys.CONTROL, "a");
+		Actual_Effort.sendKeys(s);
+		Actual_Effort.sendKeys(Keys.DELETE);
+		Actual_Effort.sendKeys(effort);
+		
 	}
 	
 	

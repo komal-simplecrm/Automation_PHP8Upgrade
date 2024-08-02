@@ -10,8 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 public class Add_Notes 
 {
 	//Data members should be declare globally with access level private by using @FindBy annotation
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-contact_name']")private WebElement Contacts;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-scrm_knight_notes_1_name']")private WebElement Knight;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-contact_name']")private WebElement Contacts;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-scrm_knight_notes_1_name']")private WebElement Knight;
 	@FindBy(xpath="//div[@role='dialog']//input[@id='first_name']")private WebElement FirstNameOnWindow;
 	@FindBy(xpath="//div[@role='dialog']//input[@id='last_name']")private WebElement LastNameOnWindow;
 	@FindBy(xpath="//button[@form='relate-search-form']")private WebElement SearchBtnOnWindow;
@@ -19,6 +19,10 @@ public class Add_Notes
 	@FindBy(xpath="//input[@id='contact_name']") private WebElement ContactsName;
 	@FindBy(xpath="//input[@id='scrm_knight_notes_1_name']") private WebElement KnightValue;
 	@FindBy(xpath="//label[@id='filename']/span/span") private WebElement UploadedFile;
+	@FindBy(xpath="//input[@name='newNotes']") private WebElement CheckedNote;
+	@FindBy(xpath="//input[@id='Notesname']") private WebElement NoteSubject;
+	@FindBy(xpath="//h6[contains(text(),'Create Note')]") private WebElement CreateNote;
+	@FindBy(xpath="//textarea[@id='Notesdescription']") private WebElement NoteDescription;
 	
 	//Initialize the constructor with access level public using PageFactory class
 	public Add_Notes(WebDriver driver)
@@ -86,5 +90,23 @@ public class Add_Notes
 	{
 		String filename = UploadedFile.getText();
 		return filename;
+	}
+	public void clickonCheckBoxNote() 
+	{
+		CheckedNote.click();
+	}
+	
+	public void enterNoteSubject(String subject) 
+	{
+		NoteSubject.sendKeys(subject);
+	}
+	public void enterNoteDescription(String description) 
+	{
+		NoteDescription.sendKeys(description);
+	}
+	
+	public void scrollUptoNote(WebDriver driver) 
+	{
+	((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", CreateNote);
 	}
 }

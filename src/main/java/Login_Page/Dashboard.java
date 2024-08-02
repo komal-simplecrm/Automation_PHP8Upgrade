@@ -5,7 +5,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -85,7 +84,7 @@ public class Dashboard
 		//For opportunity to Feedback flow
 		public void clickOnMenuDashboard(WebDriver driver, String entermenu)
 		{
-			Actions act= new Actions(driver);
+			//Actions act= new Actions(driver);
 			//act.moveToElement(Menu1).perform();
 	    	//act.click().perform();
 			 /*((JavascriptExecutor) driver).executeScript("arguments[0].click();", Menu1);

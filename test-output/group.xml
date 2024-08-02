@@ -4,15 +4,26 @@
   <test name = "Test" verbose="2" preserve-order="true">
 	<groups>  
 		<run>  
-			<include name="Export"/>  
-			
+			<include name="MassUpdate"/>  
+			<include name="AddMultipleRemainders"/> 
+			<include name="AddMulitpleInviteesInRemainder"/> 
 		</run>  
 	</groups>  
  
 	
  	<classes>  
  				
-         		<class name="Partner_Contacts_Module.Partner_ContactsTestClass"/>
+         		<class name="Contacts_Module.ContactsTestClass"/>
+      			<class name="Opportunities_Module.OpportunitiesTestClass"/>
+      			<class name="Account_Module.AccountTestClass"/>
+       			<class name="Calls_Module.CallsTestClass"/>
+        		<class name="Task_Module.TaskTestClass"/>
+ 				<class name="Lead_Module.LeadTestClass"/>
+				<class name="Cases_Module.CasesTestClass"/>
+				<class name="Documents_Module.DocumentsTestClass"/>
+				<class name="Meeting_Module.MeetingsTestClass"/>
+	        	<class name="Notes_Module.NotesTestClass"/>
+         		
 
 	</classes>  
  

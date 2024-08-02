@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import org.openqa.selenium.io.FileHandler;
@@ -33,7 +34,6 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-
 
 import Login_Page.Login_Page;
 
@@ -71,7 +71,9 @@ public class Base_Class
 			options.addArguments("--remote-allow-origins=*");
 			//options.addArguments("--remote-allow-origins=*","--ignore-certificate-errors");
 			//options.addArguments("--remote-allow-origins=*","-headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors");
+			
 			driver = new ChromeDriver(options);
+			
 		
 			
 		}else if (browserName.equals("Firefox"))
@@ -92,8 +94,9 @@ public class Base_Class
 		//Pass the URL on the Browser
 		
 		//driver.get("https://hackatonteam1.simplecrmdev.com/login");
-		driver.get("https://automatephp8.simplecrmdev.com/");
-		
+		//driver.get("https://automatephp8.simplecrmdev.com/");
+		//driver.get("https://automatephp8v267.simplecrmdev.com/");
+		driver.get("https://automatephp82.simplecrmdev.com/login");
 		//Maximize the Browser
 		driver.manage().window().maximize();
 		//implicit Wait 
@@ -103,8 +106,9 @@ public class Base_Class
 		
 		//Login as admin User
 		//login.Login("UN","PSW");
+		//Latest creds
 		login.Login("un","psw");
-		
+		//login.LoginAdmin1("UN","PSW");
 		
 	}
 	
@@ -142,7 +146,7 @@ public class Base_Class
 			System.out.println("TestCase is Failed Screen Shot Captured");
 			
 			//test.fail(MethodName+ " TestCase is Failed").addScreenCaptureFromPath(path);
-			test.fail(MarkupHelper.createLabel(result.getName()+" Test case Failed", ExtentColor.RED)).addScreenCaptureFromPath(path);
+			test.fail(MarkupHelper.createLabel(result.getName()+" Test Case Failed", ExtentColor.RED)).addScreenCaptureFromPath(path);
 			test.fail(result.getThrowable());
 			
 		}
@@ -152,7 +156,7 @@ public class Base_Class
 				
 						System.out.println("TestCase is Passed");
 							//test.pass(MethodName+ " TestCase is Passed");
-						test.pass(MarkupHelper.createLabel(result.getName()+" Test case Passed", ExtentColor.GREEN));
+						test.pass(MarkupHelper.createLabel(result.getName()+" Test Case Passed", ExtentColor.GREEN));
 			} 
 		
 		//Flush the report in the Extent Report
@@ -166,7 +170,8 @@ public class Base_Class
 	{
 		
 		//Close the Browser
-		driver.close();
+		//driver.close();
+		driver.quit();
 	}
 	
 	
@@ -205,7 +210,7 @@ public class Base_Class
 			 Firfoxdriver = new FirefoxDriver();
 			   
 			 
-			 Firfoxdriver.get("https://automatephp8.simplecrmdev.com/");
+			 Firfoxdriver.get("https://automatephp82.simplecrmdev.com/login");
 			//Maximize the Browser
 			 Firfoxdriver.manage().window().maximize();
 			//implicit Wait 
@@ -214,6 +219,7 @@ public class Base_Class
 			Login_Page login= new Login_Page(Firfoxdriver);
 			//Login as admin User
 			login.LoginAdmin(UN,PSW);
+			//login.Login("un","psw");
 			//Thread.sleep(2000);
 			//Firfoxdriver.get(URL);
 		}
@@ -228,11 +234,13 @@ public class Base_Class
 			System.setProperty("webdriver.edge.driver",openBrowserPath);
 			
 			//Create object of EdgeDriver class and provide reference of WebDriver interface
-			ChromeOptions options = new ChromeOptions();
-			options.addArguments("--remote-allow-origins=*");
-			 Tempdriver=new EdgeDriver(options);
+			//ChromeOptions options = new ChromeOptions();
+			//options.addArguments("--remote-allow-origins=*");
+			EdgeOptions edgeOptions = new EdgeOptions();
+			edgeOptions.addArguments("--remote-allow-origins=*");
+			 Tempdriver=new EdgeDriver(edgeOptions);
 			
-			 Tempdriver.get("https://automatephp8.simplecrmdev.com/");
+			 Tempdriver.get("https://automatephp82.simplecrmdev.com/login");
 			//Maximize the Browser
 			 Tempdriver.manage().window().maximize();
 			//implicit Wait 
@@ -241,7 +249,7 @@ public class Base_Class
 			Login_Page login= new Login_Page(Tempdriver);
 			//Login as admin User
 			login.LoginAdmin(UN,PSW);
-				
+			//login.Login("un","psw");	
 		}
 	}
 }

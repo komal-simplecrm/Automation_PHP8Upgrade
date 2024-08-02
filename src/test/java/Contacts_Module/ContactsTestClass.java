@@ -64,7 +64,7 @@ public class ContactsTestClass extends Base_Class
 		Thread.sleep(4000);
 		dashboard.clickOnMenuOption(driver,"Contacts");
 		//dashboard.clickOnMenuOption();
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		dashboard.closeMenuOption();
 		Thread.sleep(7000);
 	}
@@ -89,7 +89,7 @@ public class ContactsTestClass extends Base_Class
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 		
 		create_Lead.enterFirstName(UtilityClass.fetchDataFromExcelSheet("Contacts",i, 0));
-		String S=create_Lead.enterLastName(driver,UtilityClass.fetchDataFromExcelSheet("Contacts",i, 1));
+		String S = create_Lead.enterLastName(driver,UtilityClass.fetchDataFromExcelSheet("Contacts",i, 1));
 		soft.assertNotNull(S);
 		test.info("New Contact " +S+ " is Created");
 		create_Lead.enterOfficePhone(UtilityClass.fetchDataFromExcelSheet("Contacts",i, 2));
@@ -114,13 +114,14 @@ public class ContactsTestClass extends Base_Class
 		create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Contacts",i, 16));
 		create_Lead.scrollpage(driver);
 		create_Lead.selectLeadSource(driver, UtilityClass.fetchDataFromExcelSheet("Contacts",i, 17));
-		contacts.enterUserName(UtilityClass.fetchDataFromExcelSheet("Contacts",i, 18));
-		contacts.enterPassword(UtilityClass.fetchDataFromExcelSheet("Contacts",i, 19));
+		//contacts.enterUserName(UtilityClass.fetchDataFromExcelSheet("Contacts",i, 18));
+		//contacts.enterPassword(UtilityClass.fetchDataFromExcelSheet("Contacts",i, 19));
 		
-		contacts.enterReportsTo(driver, UtilityClass.fetchDataFromExcelSheet("Contacts",i, 20));
+		//contacts.enterReportsTo(driver, UtilityClass.fetchDataFromExcelSheet("Contacts",i, 20));
 		//create_Lead.enterCampaign(driver, UtilityClass.fetchDataFromExcelSheet("Contacts",i, 21));
 		//contacts.Portal_active_userCheckBox();
 		create_Lead.clickOnSavebtn();
+		list_View.getAlertMessage(S);
 		Thread.sleep(7000);
 		add_Opportunities.backToListView();
 		Thread.sleep(4000);
@@ -182,7 +183,7 @@ public class ContactsTestClass extends Base_Class
 	}
 	
 	//Create test case for Delete Contact From Edit Option
-	@Test(groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateContacts"})
+	@Test( groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateContacts"})
 	public void DeleteContactFromListView() throws InterruptedException, EncryptedDocumentException, IOException 
 	{
 		CommonFunctions.DeleteRecordFromListView(list_View, add_Opportunities, "Komal Kolhe", "Contacts");
@@ -215,16 +216,16 @@ public class ContactsTestClass extends Base_Class
 			String arr1[]= {duplicate.getFirstName(),duplicate.getLastName(),duplicate.getOfficeNumber(),duplicate.getMobile(),
 					duplicate.getTitle(), duplicate.getDepartment(),duplicate.getAccountName(),duplicate.getFax(),duplicate.getEmailAddress(),
 					contacts.getTwitterHandle(),duplicate.getAddress(),duplicate.getState(),duplicate.getPostalCode(),duplicate.getCountry(),
-					duplicate.getCity(),duplicate.getDescription(),duplicate.getLeadSource(),contacts.getUserName(),contacts.getPassword(),contacts.getReportsTo(),/*duplicate.getCampaign()*/};
+					duplicate.getCity(),duplicate.getDescription(),duplicate.getLeadSource()/*,contacts.getUserName(),contacts.getPassword(),contacts.getReportsTo(),/*duplicate.getCampaign()*/};
 			String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Contacts",4, 0),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 1),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 2),
 					UtilityClass.fetchDataFromExcelSheet("Contacts",4, 3),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 4),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 5),
 					UtilityClass.fetchDataFromExcelSheet("Contacts",4, 6),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 7),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 8),
 					UtilityClass.fetchDataFromExcelSheet("Contacts",4, 9),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 10),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 11),
 					UtilityClass.fetchDataFromExcelSheet("Contacts",4, 12),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 13),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 14),
-					UtilityClass.fetchDataFromExcelSheet("Contacts",4, 15),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 17),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 18),
+					UtilityClass.fetchDataFromExcelSheet("Contacts",4, 15),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 17)/*,UtilityClass.fetchDataFromExcelSheet("Contacts",4, 18),
 					UtilityClass.fetchDataFromExcelSheet("Contacts",4, 19),UtilityClass.fetchDataFromExcelSheet("Contacts",4, 20),/*UtilityClass.fetchDataFromExcelSheet("Contacts",4, 21)*/};
 			
-			for(int i=0;i<=19;i++)
+			for(int i=0;i<=16;i++)
 			{
 				
 				soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");

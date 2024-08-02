@@ -1,13 +1,9 @@
 package POM_Lead_Module;
 
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import Library_Files.CommonFunctions;
-
 
 public class Duplicate_Page {
 	
@@ -31,7 +27,7 @@ public class Duplicate_Page {
 				@FindBy(xpath="//input[@id='primary_address_postalcode']")private WebElement PostalCode;
 				@FindBy(xpath="//input[@id='primary_address_country']")private WebElement Country;
 				@FindBy(xpath="//input[@id='primary_address_city']")private WebElement City;
-				@FindBy(xpath="//input[@id='email10']")private WebElement EmailAddress;
+				@FindBy(xpath="//input[@id='email1-0']")private WebElement EmailAddress;
 				@FindBy(xpath="//textarea[@id='description']")private WebElement Description;
 				@FindBy(xpath="//input[@id='phone_fax']")private WebElement Fax;
 				@FindBy(xpath="//input[@id='scrm_partner_contacts_leads_name']")private WebElement Partner_Contacts;
@@ -52,7 +48,7 @@ public class Duplicate_Page {
 				@FindBy(xpath="//input[@id='alt_address_postalcode']")private WebElement alterPostalCode;
 				@FindBy(xpath="//input[@id='alt_address_country']")private WebElement alterCountry;
 				@FindBy(xpath="//input[@id='alt_address_city']")private WebElement alterCity;
-				
+				@FindBy(xpath="//input[@id='lead_scoring_c']")private WebElement LeadScore;
 				
 				
 				//Initialize the constructor with access level public using PageFactory class
@@ -86,6 +82,13 @@ public class Duplicate_Page {
 					
 					
 				} 
+				
+				public String getLeadScore()
+				{
+					String leadScore = LeadScore.getAttribute("value");
+					return leadScore;
+					
+				}
 				public String getOfficeNumber()
 				{
 					String OP=OfficePhone.getAttribute("value");

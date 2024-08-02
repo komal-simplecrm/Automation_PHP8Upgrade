@@ -56,6 +56,7 @@ public class FilterData extends Base_Class
 	public static void getListViewData( String columnName, String dataFromExcelSheet) throws InterruptedException, AWTException, ParseException
 	{
 		System.out.println("Enter in getListViewData function. ");
+		System.out.println("Column Name"+columnName);
 		test.info("Enter in getListViewData function.");
 		try {
 		WebElement element = driver.findElement(By.xpath("//span[contains(@class,'MUIDataTableHeadCell')]//div[text()='"+columnName+"']"));

@@ -27,10 +27,6 @@ import POM_Lead_Module.Duplicate_Page;
 import POM_Lead_Module.Lead_ListView;
 import POM_Opportunities_Module.Add_Opportunities;
 
-
-
-
-
 public class LeadTestClass extends Base_Class
 {
 	
@@ -66,7 +62,7 @@ public class LeadTestClass extends Base_Class
 	}
 	
 	//Create test case for add multiple records in Lead module
-	@Test(groups={"Create", "Sanity"})
+	@Test( groups={"Create", "Sanity"})
 	public void CreateLead() throws EncryptedDocumentException, IOException, InterruptedException 
 	{
 		//Create this test case in Extent Report
@@ -84,42 +80,44 @@ public class LeadTestClass extends Base_Class
 		try {
 			
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-		create_Lead.selectSalutation(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 0));
+		//create_Lead.selectSalutation(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 0));
 		create_Lead.enterFirstName(UtilityClass.fetchDataFromExcelSheet("Leads",i, 1));
-		String S=create_Lead.enterLastName(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 2));
+		String S = create_Lead.enterLastName(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 2));
 		soft.assertNotNull(S);
 		
 		create_Lead.selectType(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 3));
+		create_Lead.enterLeadScore(UtilityClass.fetchDataFromExcelSheet("Leads",i, 35));
 		create_Lead.enterOfficePhone(UtilityClass.fetchDataFromExcelSheet("Leads",i, 4));
 		create_Lead.enterTitle(UtilityClass.fetchDataFromExcelSheet("Leads",i, 5));
 		create_Lead.enterMobile(UtilityClass.fetchDataFromExcelSheet("Leads",i, 6));
 		create_Lead.enterDepartment(UtilityClass.fetchDataFromExcelSheet("Leads",i, 7));
-		create_Lead.selectLoanType(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 8));
+		//create_Lead.selectLoanType(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 8));
 		create_Lead.enterAccountName(UtilityClass.fetchDataFromExcelSheet("Leads",i, 9));
 		create_Lead.enterWebsite(UtilityClass.fetchDataFromExcelSheet("Leads",i, 10));
+		String S1=create_Lead.enterEmailAddress(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 18));
+		soft.assertNotNull(S1);
+		soft.assertAll();
+		create_Lead.clickOnConvertedRedioBtn();
 		create_Lead.selectStatus(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 11));
 		create_Lead.selectApprovalStatus(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 12));
 		//Scroll down page 
 		create_Lead.ScrollPage(driver);
 		create_Lead.enterAddress(UtilityClass.fetchDataFromExcelSheet("Leads",i, 13));
-		
 		create_Lead.enterState(UtilityClass.fetchDataFromExcelSheet("Leads",i, 14));
 		create_Lead.enterPostalCode(UtilityClass.fetchDataFromExcelSheet("Leads",i, 15));
 		create_Lead.enterCountry(UtilityClass.fetchDataFromExcelSheet("Leads",i, 16));
 		create_Lead.enterCity(UtilityClass.fetchDataFromExcelSheet("Leads",i, 17));
 		create_Lead.AddressCopyFromLeft();
-		String S1=create_Lead.enterEmailAddress(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 18));
-		soft.assertNotNull(S1);
-		soft.assertAll();
+		
 		create_Lead.ScrollPageUptocity(driver);
-		create_Lead.clickOnConvertedRedioBtn();
+		
 		create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("Leads",i, 19));
-		create_Lead.enterFax(UtilityClass.fetchDataFromExcelSheet("Leads",i, 20));
-		create_Lead.enterUTM_URL(UtilityClass.fetchDataFromExcelSheet("Leads",i, 21));
-		create_Lead.enterPartner_Contact(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 22));
-		create_Lead.enterUTM_Campaign(UtilityClass.fetchDataFromExcelSheet("Leads",i, 23));
+		//create_Lead.enterFax(UtilityClass.fetchDataFromExcelSheet("Leads",i, 20));
+		//create_Lead.enterUTM_URL(UtilityClass.fetchDataFromExcelSheet("Leads",i, 21));
+		//create_Lead.enterPartner_Contact(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 22));
+		//create_Lead.enterUTM_Campaign(UtilityClass.fetchDataFromExcelSheet("Leads",i, 23));
 		Thread.sleep(2000);
-		create_Lead.scrolluptoUTMURL(driver);
+		//create_Lead.scrolluptoUTMURL(driver);
 		
 		create_Lead.selectLeadSource(driver,UtilityClass.fetchDataFromExcelSheet("Leads",i, 24));
 		Thread.sleep(2000);
@@ -132,7 +130,7 @@ public class LeadTestClass extends Base_Class
 		Thread.sleep(2000);
 		create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Leads",i, 34));
 		create_Lead.clickOnSavebtn();
-		test.info("New Lead " +S+ " is Created");
+		list_View.getAlertMessage(S);
 		
 		Thread.sleep(7000);
 		add_Opportunities.backToListView();
@@ -152,7 +150,7 @@ public class LeadTestClass extends Base_Class
 	}
 	
 	//Test case for Edit functionality
-	@Test(groups={"Edit", "Sanity"})
+	@Test( groups={"Edit", "Sanity"})
 	public void EditLead() throws EncryptedDocumentException, IOException, InterruptedException
 	{
 		//Create this test case in Extent Report
@@ -189,7 +187,7 @@ public class LeadTestClass extends Base_Class
 		}
 	
 	//Test case for Delete Lead From List View functionality
-	@Test(groups={"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateLead"})
+	@Test( groups={"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateLead"})
 	public void DeleteLeadFromListView() throws InterruptedException
 	{
 		
@@ -253,7 +251,7 @@ public class LeadTestClass extends Base_Class
 	}
 	
 	//Test case for Verify record us duplicate functionality
-	@Test(groups={"Duplicate"})
+	@Test(  groups={"Duplicate"})
 	public void DuplicateLead() throws InterruptedException, EncryptedDocumentException, IOException
 	{	
 		//Create this test case in Extent Report
@@ -270,24 +268,24 @@ public class LeadTestClass extends Base_Class
 		Thread.sleep(2000);
 		list_View.menu(driver,"DUPLICATE");
 		int j=0,k=0;
-		String arr1[]= {duplicate.getSalutation(),duplicate.getFirstName(),duplicate.getLastName(),duplicate.getType(),duplicate.getOfficeNumber(),
-				duplicate.getTitle(),duplicate.getMobile(), duplicate.getDepartment(),duplicate.getLoanType(),duplicate.getAccountName(),duplicate.getWebsite(),
+		String arr1[]= {/*duplicate.getSalutation(),*/duplicate.getFirstName(),duplicate.getLastName(),duplicate.getType(),duplicate.getOfficeNumber(),
+				duplicate.getTitle(),duplicate.getMobile(), duplicate.getDepartment(),/*duplicate.getLoanType(),*/duplicate.getAccountName(),duplicate.getWebsite(),
 				duplicate.getStatus(),duplicate.getApprovalStatus(),duplicate.getAddress(),duplicate.getState(),duplicate.getPostalCode(),
-				duplicate.getCountry(),duplicate.getCity(),duplicate.getEmailAddress(),duplicate.getDescription(),duplicate.getFax(),
-				duplicate.getUTM_URL(),duplicate.getPartner_Contacts(),duplicate.getUTM_Campaign(),duplicate.getLeadSource(),duplicate.getStatus_Description(),duplicate.getLead_Source_Description(),
-				duplicate.getOpportunity_Amount(),duplicate.getRefered_by(),/*duplicate.getCampaign()*/};
-		String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Leads",1, 0),UtilityClass.fetchDataFromExcelSheet("Leads",1, 1),UtilityClass.fetchDataFromExcelSheet("Leads",1, 2),
+				duplicate.getCountry(),duplicate.getCity(),duplicate.getEmailAddress(),duplicate.getDescription()/*,duplicate.getFax(),
+				duplicate.getUTM_URL(),duplicate.getPartner_Contacts(),duplicate.getUTM_Campaign(),*/,duplicate.getLeadSource(),duplicate.getStatus_Description(),duplicate.getLead_Source_Description(),
+				duplicate.getOpportunity_Amount(),duplicate.getRefered_by(),duplicate.getLeadScore()};
+		String arr2[]= {/*UtilityClass.fetchDataFromExcelSheet("Leads",1, 0),*/UtilityClass.fetchDataFromExcelSheet("Leads",1, 1),UtilityClass.fetchDataFromExcelSheet("Leads",1, 2),
 				UtilityClass.fetchDataFromExcelSheet("Leads",1, 3),UtilityClass.fetchDataFromExcelSheet("Leads",1, 4),UtilityClass.fetchDataFromExcelSheet("Leads",1, 5),
-				UtilityClass.fetchDataFromExcelSheet("Leads",1, 6),UtilityClass.fetchDataFromExcelSheet("Leads",1, 7),UtilityClass.fetchDataFromExcelSheet("Leads",1, 8),
+				UtilityClass.fetchDataFromExcelSheet("Leads",1, 6),UtilityClass.fetchDataFromExcelSheet("Leads",1, 7),/*UtilityClass.fetchDataFromExcelSheet("Leads",1, 8),*/
 				UtilityClass.fetchDataFromExcelSheet("Leads",1, 9),UtilityClass.fetchDataFromExcelSheet("Leads",1, 10),UtilityClass.fetchDataFromExcelSheet("Leads",1, 11),
 				UtilityClass.fetchDataFromExcelSheet("Leads",1, 12),UtilityClass.fetchDataFromExcelSheet("Leads",1, 13),UtilityClass.fetchDataFromExcelSheet("Leads",1, 14),
 				UtilityClass.fetchDataFromExcelSheet("Leads",1, 15),UtilityClass.fetchDataFromExcelSheet("Leads",1, 16),UtilityClass.fetchDataFromExcelSheet("Leads",1, 17),
-				UtilityClass.fetchDataFromExcelSheet("Leads",1, 18),UtilityClass.fetchDataFromExcelSheet("Leads",1, 19),UtilityClass.fetchDataFromExcelSheet("Leads",1, 20),
-				UtilityClass.fetchDataFromExcelSheet("Leads",1, 21),UtilityClass.fetchDataFromExcelSheet("Leads",1, 22),UtilityClass.fetchDataFromExcelSheet("Leads",1, 23),UtilityClass.fetchDataFromExcelSheet("Leads",1, 24),
+				UtilityClass.fetchDataFromExcelSheet("Leads",1, 18),UtilityClass.fetchDataFromExcelSheet("Leads",1, 19),/*UtilityClass.fetchDataFromExcelSheet("Leads",1, 20),
+				UtilityClass.fetchDataFromExcelSheet("Leads",1, 21),UtilityClass.fetchDataFromExcelSheet("Leads",1, 22),UtilityClass.fetchDataFromExcelSheet("Leads",1, 23)*/UtilityClass.fetchDataFromExcelSheet("Leads",1, 24),
 				UtilityClass.fetchDataFromExcelSheet("Leads",1, 25),UtilityClass.fetchDataFromExcelSheet("Leads",1, 26),UtilityClass.fetchDataFromExcelSheet("Leads",1, 27),
-				UtilityClass.fetchDataFromExcelSheet("Leads",1, 28),/*UtilityClass.fetchDataFromExcelSheet("Leads",1, 29)*/};
+				UtilityClass.fetchDataFromExcelSheet("Leads",1, 28),UtilityClass.fetchDataFromExcelSheet("Leads",1, 35)};
 		
-		for(int i=0;i<29;i++)
+		for(int i=0;i<24;i++)
 		{
 			
 			soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");
@@ -303,7 +301,7 @@ public class LeadTestClass extends Base_Class
 	}
 	
 	//Test case for In this if copy from left check is selected then verify both the address is same else print the Alternate address.
-	@Test(groups={"alternteAddress"})
+	@Test( groups={"alternteAddress"})
 	public void alternteAddress() throws InterruptedException, EncryptedDocumentException, IOException, AWTException
 	{
 		CommonFunctions.alternteAddress(dashboard,list_View, duplicate, "John Kaif");
@@ -311,7 +309,7 @@ public class LeadTestClass extends Base_Class
 	}
 	
 	//Test case for Email setting 1st email id by default primary, second Opted out should be visible in detail view and 3rd email id invalid should not be displayed in detail view
-	@Test(groups={"EmailSetting", "Sanity"})
+	@Test( groups={"EmailSetting", "Sanity"})
 	public void EmailSetting() throws EncryptedDocumentException, InterruptedException, IOException
 	{
 		
@@ -320,7 +318,7 @@ public class LeadTestClass extends Base_Class
 	}
 	
 	//Test case for In this if copy from left check is selected then verify both the address is same else print the Alternate address.
-	@Test(enabled = false,groups={"MultipleEmailAddress", "Sanity"})
+	@Test( groups={"MultipleEmailAddress", "Sanity"})
 	public void MultipleEmailAddress() throws InterruptedException, EncryptedDocumentException, IOException
 	{
 		CommonFunctions.MultipleEmailAddress(list_View, create_Lead, add_Opportunities, "Leads", 2, 1, 18, 30);
@@ -335,7 +333,7 @@ public class LeadTestClass extends Base_Class
 	}
 	
 	//Test case for Mass update functionality
-	@Test( groups={"MassUpdate", "Sanity"})
+	@Test(groups={"MassUpdate", "Sanity"})
 	public void MassUpdateLeads() throws InterruptedException, EncryptedDocumentException, IOException, AWTException, ParseException
 	{
 		

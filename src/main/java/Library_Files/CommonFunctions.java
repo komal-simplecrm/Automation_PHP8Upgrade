@@ -3,8 +3,9 @@ package Library_Files;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-
+import java.util.Date;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.openqa.selenium.WebElement;
@@ -173,7 +174,7 @@ public class CommonFunctions extends Base_Class
 		create_Lead.enterEmailAddress(driver,UtilityClass.fetchDataFromExcelSheet(sheetName,1, emailAddressCellIndex));//8
 		
 		
-		int k=0,l=11;
+		int k=0,l=1;//11
 		int i=1;
 		int p=additionalEmailCellIndex;//22
 		for(int y=0;y<=1;y++)
@@ -219,7 +220,7 @@ public class CommonFunctions extends Base_Class
 				create_Lead.enterLastName(driver,UtilityClass.fetchDataFromExcelSheet(sheetName,1, lastnameCellIndex));//2
 				create_Lead.enterEmailAddress(driver,UtilityClass.fetchDataFromExcelSheet(sheetName,1, emailAddressCellIndex ));//18
 		}
-		int k=0,l=11;
+		int k=0,l=1;//11
 		int p=additionalEmailCellIndex;//30
 		//add for loop to add maximum 5 email address
 		for(int y=0;y<4;y++)
@@ -244,7 +245,7 @@ public class CommonFunctions extends Base_Class
 		for(int i=0;i<=2;i++)
 		{
 			
-			calls.clickOnAdd_Reminder();
+			//calls.clickOnAdd_Reminder();
 			
 			int k = InviteesCellIndex;//12
 			String a[]= {"Users","Contacts","Leads"};
@@ -259,13 +260,14 @@ public class CommonFunctions extends Base_Class
 			calls.selectPopUpRadioBtnReminders(driver, priorTime,i);
 			calls.selectEmailRadioBtnReminders(driver, priorTime,i);
 			calls.scrollUpTotime(driver,i);
+			calls.clickOnAdd_Reminder();
 		}
 	}
 	
 	
 	public static void AddMulitpleInviteesInRemainder(Add_Calls calls, String priorTime, int InvteesCellIndex ) throws EncryptedDocumentException, InterruptedException, IOException
 	{
-		calls.clickOnAdd_Reminder();
+		//calls.clickOnAdd_Reminder();
 		calls.scrolluptoRemainderWord(driver);
 		String a[]= {"Users","Contacts","Leads"};
 		//calls.addMoreUsers();
@@ -338,7 +340,7 @@ public class CommonFunctions extends Base_Class
 	 test= extent.createTest("Mass Update " +sheetName+ " Module").assignAuthor("Komal")
 				.assignCategory("Functional Test Case").assignDevice("Chrome");
 	 	//String Subject = "HDFC Finance - Service Request"; 
-	 	String assignedTo = "rahul thakre";
+	 	String assignedTo = "Rahul Thakre";
 	 	list_View.enterTextInSearchBtn(driver, SearchText);//1,9
 	 	list_View.massUpdate(driver, SearchText, assignedTo /*UtilityClass.fetchDataFromExcelSheet("Cases",1, 8)*/);
 	 	
@@ -372,6 +374,10 @@ public class CommonFunctions extends Base_Class
 			if(text.equals(""))
 			{
 				text = element.getAttribute("textContent");
+			}
+			if(text.equals(""))
+			{
+				text = element.getAttribute("value");
 			}
 		}
 		return text;
@@ -568,5 +574,14 @@ public class CommonFunctions extends Base_Class
 					test.info(input1+ " record is not matched");
 					
 			}
+		}
+		
+		public static String getCurrentTime()
+		{
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy h:mm:ss");
+			String formattedDate = sdf.format(date);
+			System.out.println(formattedDate); // 12/01/2011 4:48:16 PM
+			return formattedDate; 
 		}
 }

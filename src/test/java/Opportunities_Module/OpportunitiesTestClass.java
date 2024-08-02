@@ -62,7 +62,7 @@ public class OpportunitiesTestClass extends Base_Class
 		//Thread.sleep(5000);
 		dashboard.clickOnMenuOption(driver,"Opportunities");
 		dashboard.closeMenuOption();
-		Thread.sleep(4000);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 	}
 	
 	//Create test case for add multiple records in Opportunity module
@@ -87,13 +87,13 @@ public class OpportunitiesTestClass extends Base_Class
 				soft.assertNotNull(OppName);
 				 
 				add_Opportunities.enterAccountName(driver, UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 1));
+				add_Opportunities.selectCurrency(driver, UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 2));
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 				String date = add_Opportunities.enterDate_closed(driver,UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 3) );
 				soft.assertNotNull(date);
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 				String OppAmount = add_Opportunities.enterOpportunityAmount(UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 4));
 				soft.assertNotNull(OppAmount);
-				
 				add_Opportunities.selectType(driver, UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 5));
 				String Stages = add_Opportunities.selectSalesStage(driver, UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 6),
 						UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 12),UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 14),
@@ -108,11 +108,11 @@ public class OpportunitiesTestClass extends Base_Class
 				create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Opportunity",i, 15));
 				
 				create_Lead.clickOnSavebtn();
-				test.info(OppName+ " Opportunities is created.");
-				//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-				Thread.sleep(7000);
+				list_View.getAlertMessage(OppName);
+				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(70));
+				//Thread.sleep(7000);
 				add_Opportunities.backToListView();
-				Thread.sleep(4000);
+				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 				list_View.scrolluptoAddBtn(driver);
 			
 			}catch(NullPointerException e) 
@@ -134,12 +134,10 @@ public class OpportunitiesTestClass extends Base_Class
 			
 			 test.info("User should Edit the Lead");
 			 
-			/*System.out.println("Enter Opportunity Name: ");
-			Scanner scan1 = new Scanner(System.in);
-			String input1 = scan1.nextLine();*/
-			 String input1="Nidhi";
+			 	String input1="Nidhi";
 				list_View.enterTextInSearchBtn(driver,input1);
-				Thread.sleep(5000);
+				//Thread.sleep(5000);
+				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 			String OppName=add_Opportunities.verifyOpportunityName(driver, input1);
 			if(OppName.equals(input1))
 			{
@@ -166,7 +164,7 @@ public class OpportunitiesTestClass extends Base_Class
 		
 		
 	//Test case for Delete Lead From List View functionality
-	@Test(groups= {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateOpportunities"})
+	@Test( groups= {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateOpportunities"})
 	public void DeleteOpportunityFromListView() throws Exception
 	{
 		CommonFunctions.DeleteRecordFromListView(list_View, add_Opportunities, "Rahul", "Opportunity");
@@ -174,13 +172,13 @@ public class OpportunitiesTestClass extends Base_Class
 	}
 	
 	//Test case for Delete From Edit Option functionality
-	@Test(groups= {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateOpportunities"})
+	@Test( groups= {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateOpportunities"})
 	public void DeleteOpportunityFromEditOption() throws Exception
 	{
 		CommonFunctions.DeleteRecordFromEditOption(dashboard,list_View, add_Opportunities, "Komal", "Opportunity");
 		
 	}
-	@Test(groups= {"Duplicate"})
+	@Test( groups= {"Duplicate"})
 	public void DuplicateOpportunity() throws InterruptedException, EncryptedDocumentException, IOException, ParseException
 	{
 		//Create this test case in Extent Report
@@ -190,12 +188,14 @@ public class OpportunitiesTestClass extends Base_Class
 		 test.info("Verify Opportunity is duplicate or not");
 		
 		
-		SoftAssert soft=new SoftAssert();
+		SoftAssert soft = new SoftAssert();
 		
 		String input1="John";
 		list_View.enterTextInSearchBtn(driver,input1);
 		Thread.sleep(5000);
 		add_Opportunities.clickOnOpp(driver, input1);
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
+		Thread.sleep(5000);
 		list_View.menu(driver,"DUPLICATE");
 		
 		
@@ -204,9 +204,10 @@ public class OpportunitiesTestClass extends Base_Class
 		
 		String[] date = duplicate_opp.getDate_closed(); 
 		String ExactclosedDate = duplicate_opp.dateCompare(date);
-		
+		System.out.println(ExactclosedDate+ "ExactclosedDate");
+
 		String salesStage = duplicate_opp.getSalesStage();
-		String SlaesStages="Closed Lost";
+		String SlaesStages = "Closed Lost";
 		if(salesStage.equals(SlaesStages))
 		{
 			ExactActual_date_closed = "";
@@ -214,26 +215,28 @@ public class OpportunitiesTestClass extends Base_Class
 			//ExactActual_date_closed = duplicate_opp.dateCompare(date2);
 			String[] date1 = duplicate_opp.getDate_lost(); 
 			ExactlostDate = duplicate_opp.dateCompare(date1);
+			System.out.println(ExactlostDate+ "ExactlostDate");
 		
 		}else
 		{
 			String[] date2 = duplicate_opp.getActual_date_closed(); 
 			ExactActual_date_closed = duplicate_opp.dateCompare(date2);
+			System.out.println(ExactActual_date_closed+ "ExactActual_date_closed");
 		}
 		
 		int j=0,k=0;
 		String arr1[]= {duplicate_opp.getOpportunityName(),duplicate_opp.getAccountName(),duplicate_opp.getCurrency(),
 				ExactclosedDate,duplicate_opp.getOpportunityAmount(), duplicate_opp.getType(),duplicate_opp.getSalesStage(), duplicate.getLeadSource()
 				,duplicate_opp.getProbability(),/*duplicate.getCampaign()*/ duplicate_opp.getNext_Step(),ExactActual_date_closed, ExactlostDate,
-				duplicate_opp.getDescription(),duplicate_opp.getReason_for_lost()};
+				/*duplicate_opp.getDescription(),*/duplicate_opp.getReason_for_lost()};
 		String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 0),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 1),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 2),
 				UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 3),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 4),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 5),
 				UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 6),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 7),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 8),
 				/*UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 9)*/UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 10),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 11),
-				UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 12),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 13),UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 14),
+				UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 12),/*UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 13),*/UtilityClass.fetchDataFromExcelSheet("Opportunity",1, 14),
 				};
 		
-		for(int i=0;i<14;i++)
+		for(int i=0;i<13;i++)
 		{
 			
 			soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");

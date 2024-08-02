@@ -19,6 +19,7 @@ public class Login_Page
 			@FindBy(xpath="//input[@id='password']") private WebElement PSW;
 			@FindBy(xpath="//button[@type='submit']//span[text()='Login']") private WebElement loginbtn;
 			
+
 			//Initialize the constructor with access level public using PageFactory class
 			public Login_Page(WebDriver driver)
 			{
@@ -28,26 +29,25 @@ public class Login_Page
 			//Utilize within the methods with access level public 
 			public void Login(String UN, String psw) throws IOException, InterruptedException
 			{
-				//ClickOnBaseline.click();
-				//Thread.sleep(4000);
-				//Baseline.click();
+				
 				UserId.sendKeys(UtilityClass.getDataFromPF(UN));
 				PSW.sendKeys(UtilityClass.getDataFromPF(psw));
+				Thread.sleep(2000);
 				loginbtn.click();
+				Thread.sleep(3000);
 			}
 			
 			public void LoginAdmin(String UN, String PSw) throws IOException, InterruptedException
 			{
-				//ClickOnBaseline.click();
-				//Thread.sleep(4000);
-				//Baseline.click();
-				//UserId.sendKeys("Komal");
-				//PSW.sendKeys("Komal@kolhe8");
+				
 				UserId.sendKeys(UN);
 			
 				PSW.sendKeys(PSw);
-				//Thread.sleep(5000);
+				Thread.sleep(2000);
 				loginbtn.click();
+				Thread.sleep(3000);
 			}
+			
+			
 			
 }

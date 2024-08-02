@@ -29,7 +29,7 @@
              	<class name="SalesFlow.OpportunityToFeedbackFlow"/>
               	<class name="Notes_Module.NotesTestClass"/>
          		<class name="Partner_Contacts_Module.Partner_ContactsTestClass"/>
-
+				<class name="BPM.Generic_CompleteBPM"/>
     	
     </classes>
   </test> <!-- Test -->

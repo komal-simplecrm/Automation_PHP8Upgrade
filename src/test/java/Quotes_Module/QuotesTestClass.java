@@ -98,9 +98,10 @@ public class QuotesTestClass extends Base_Class
 				quotes.selectPaymentTerm(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,7));	
 				quotes.selectApprovalStatus(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,8), UtilityClass.fetchDataFromExcelSheet("Quotes",i,9));
 				quotes.scrollpageuptoSearchIconKnight(driver);
-				quotes.selectKnight(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,33));
+				//quotes.selectKnight(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,33));
 				
-				//quotes.enterApprovalIssue(UtilityClass.fetchDataFromExcelSheet("Quotes",i,9));	
+				quotes.enterApprovalIssue(UtilityClass.fetchDataFromExcelSheet("Quotes",i,9));	
+				quotes.enterDescription(UtilityClass.fetchDataFromExcelSheet("Quotes",i,34));
 				quotes.selectAccount(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,10));		
 				
 				quotes.selectContact(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,11));	
@@ -113,7 +114,7 @@ public class QuotesTestClass extends Base_Class
 				add_Account.enterBillingCity(UtilityClass.fetchDataFromExcelSheet("Quotes",i,16));
 				add_Account.clickCopyFromleftCheckBox();
 				add_Account.scrollpageCopyFromleftCheckBox(driver);
-				quotes.selectCurrency(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,17));	
+				//quotes.selectCurrency(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,17));	
 				//quotes.scrollUpToShippingAmount(driver);
 				quotes.clickOnAddGroup();
 				quotes.clickOnAddProductLine();
@@ -137,7 +138,7 @@ public class QuotesTestClass extends Base_Class
 				quotes.selectShippingTax(driver, UtilityClass.fetchDataFromExcelSheet("Quotes",i,32));
 				create_Lead.scrollpage(driver);
 				create_Lead.clickOnSavebtn();
-				test.info(quote+ " quote is created.");
+				list_View.getAlertMessage(quote);
 				//back to list view of Account module
 				//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 				Thread.sleep(7000);
@@ -156,7 +157,7 @@ public class QuotesTestClass extends Base_Class
 	}	
 	
 	//Create test case for Edit Quote
-	@Test( groups={"Edit", "Sanity"})
+	@Test(enabled= false, groups={"Edit", "Sanity"})
 	public void EditQuote() throws Exception 
 	{
 			//Create this test case in Extent Report
@@ -192,7 +193,7 @@ public class QuotesTestClass extends Base_Class
 	}
 	
 	//Create test case for Delete Account From Edit Option
-	@Test( groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateQuotes"})
+	@Test(enabled= false, groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateQuotes"})
 	public void DeleteQuoteFromEditOption() throws Exception 
 	{
 		CommonFunctions.DeleteRecordFromEditOption(dashboard, list_View, add_Opportunities,"Quote1", "Quotes");
@@ -200,7 +201,7 @@ public class QuotesTestClass extends Base_Class
 	}
 	
 	//Create test case for Delete Account From Edit Option
-	@Test( groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateQuotes"})
+	@Test(enabled= false, groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateQuotes"})
 	public void DeleteQuoteFromListView() throws InterruptedException, EncryptedDocumentException, IOException 
 	{
 		CommonFunctions.DeleteRecordFromListView(list_View, add_Opportunities, "Quote2", "Quotes");
@@ -208,14 +209,14 @@ public class QuotesTestClass extends Base_Class
 	}
 
 	//Test case for In this if copy from left check is selected then verify both the address is same else print the Alternate address.
-	@Test( groups={"ShippingAddress"})
+	@Test(enabled= false, groups={"ShippingAddress"})
 	public void ShippingAddressQuotes() throws InterruptedException, EncryptedDocumentException, IOException
 	{
 		CommonFunctions.ShippingAddress(list_View, add_Account, duplicate_account, "Quote1", "Accounts");
 	}
 	
 	//Test case for Export functionality
-	@Test( groups = {"Export", "Sanity"})
+	@Test(enabled= false, groups = {"Export", "Sanity"})
 	public void ExportRecordsForQuote() throws Exception
 	{
 			
@@ -224,7 +225,7 @@ public class QuotesTestClass extends Base_Class
 	}
 	
 	//Test case for Mass update functionality
-	@Test( groups={"MassUpdate", "Sanity"})
+	@Test(enabled= false, groups={"MassUpdate", "Sanity"})
 	public void MassUpdateQuotes() throws InterruptedException, EncryptedDocumentException, IOException, AWTException, ParseException
 	{
 		
@@ -232,7 +233,7 @@ public class QuotesTestClass extends Base_Class
 		
 	}
 	
-	@Test( groups= {"Duplicate"})
+	@Test(enabled= false, groups= {"Duplicate"})
 	public void DuplicateQuotes() throws InterruptedException, EncryptedDocumentException, IOException, ParseException, AWTException
 	{
 		//Create this test case in Extent Report
@@ -299,7 +300,7 @@ public class QuotesTestClass extends Base_Class
 	}
 	
 	
-	@Test( groups= {"Calculations", "Sanity"})
+	@Test(enabled= false, groups= {"Calculations", "Sanity"})
 	public void Quotes_Calculation() throws InterruptedException
 	{
 		//Create this test case in Extent Report

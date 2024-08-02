@@ -39,18 +39,18 @@ public class UtilityClass extends Base_Class
 	{
 		//Create object FileInputStream class and pass path of the property file
 		//Path:right click on package-->properties-->copy Location
-		String PropertyFile=System.getProperty("user.dir")+"\\Prop.Properties";
+		String PropertyFile = System.getProperty("user.dir")+"\\Prop.Properties";
 		//To reach up to property file
-		FileInputStream file=new FileInputStream(PropertyFile);
+		FileInputStream file = new FileInputStream(PropertyFile);
 		
 		//Create object of Properties class to call the load method which is present in Properties class
-		Properties prop=new Properties();
+		Properties prop = new Properties();
 		
 		//To open Property file non-static method
 		prop.load(file);
 		
 		//To fetch data from property file and stored in the object
-		String value1=prop.getProperty(key);
+		String value1 = prop.getProperty(key);
 		
 		return value1;
 	}
@@ -103,11 +103,11 @@ public class UtilityClass extends Base_Class
 	public static String ScreenShot(WebDriver driver, String testMethodName) throws IOException
 	{
 		String ScreenshotPath=System.getProperty("user.dir")+"\\ScreenShot1\\";
-		//Type Cast WebDRiver object with TakesScreenshot interface and call getScreenshotAs method
+		//Type Cast WebDriver object with TakesScreenshot interface and call getScreenshotAs method
 		File Scrouce=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		//create object of file class and pass the destination folder path in that constructor
 		//FileUtils.copyFile(Scrouce, new File("C:\\Users\\admin\\eclipse-workspace\\NewProject\\ScreenShot"+"\\Sample1\\.png"));
-		File Dest=new File(ScreenshotPath+testMethodName+"_"+".png");
+		File Dest=new File(ScreenshotPath+testMethodName+".png");
 		//Copy that screen shot from one location to the another location so create object of file class first
 		FileHandler.copy(Scrouce, Dest);
 		return Dest.getAbsolutePath();

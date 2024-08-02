@@ -21,7 +21,7 @@ import Library_Files.UtilityClass;
 public class Add_Quotes 
 {
 	//Data members should be declare globally with access level private by using @findBy annotation
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-opportunity']")private WebElement SearchIconOpportunity;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-opportunity']")private WebElement SearchIconOpportunity;
 	@FindBy(xpath="//input[@id='opportunity']")private WebElement Opportunity;
 	@FindBy(xpath="//input[@id='number']")private WebElement QuoteNumber;
 	@FindBy(xpath="//input[@id='stage']")private WebElement QuoteStage;
@@ -31,19 +31,21 @@ public class Add_Quotes
 	@FindBy(xpath="//input[@id='term']")private WebElement PaymentTerm;
 	@FindBy(xpath="//input[@id='approval_status']")private WebElement ApprovalStatus;
 	@FindBy(xpath="//textarea[@id='approval_issue']")private WebElement ApprovalIssue;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-scrm_knight_aos_quotes_1_name']")private WebElement SearchIconKnight;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-aos_products_aos_quotes_1_name']")private WebElement SearchIconProduct;
+	@FindBy(xpath="//textarea[@id='description']")private WebElement Description;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-scrm_knight_aos_quotes_1_name']")private WebElement SearchIconKnight;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-aos_products_aos_quotes_1_name']")private WebElement SearchIconProduct;
 	@FindBy(xpath="//input[@id='scrm_knight_aos_quotes_1_name']")private WebElement Knight;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-billing_account']")private WebElement SearchIconAccount;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-billing_account']")private WebElement SearchIconAccount;
 	@FindBy(xpath="//input[@id='billing_account']")private WebElement Account;
 	@FindBy(xpath="//input[@id='billing_contact']")private WebElement Contact;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-billing_contact']")private WebElement SearchIconContact;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-billing_contact']")private WebElement SearchIconContact;
 	@FindBy(xpath="//div[@id='currency_id']")private WebElement Currency;
 	@FindBy(xpath="//input[@id='shipping_amount']")private WebElement ShippingAmount;
 	@FindBy(xpath="//input[@id='shipping_tax']")private WebElement ShippingTax;
-	@FindBy(xpath="//span[text()='ADD GROUP']")private WebElement AddGroup;
-	@FindBy(xpath="//span[text()='ADD PRODUCT LINE']")private WebElement AddProductLine;
-	@FindBy(xpath="//span[text()='ADD SERVICE LINE']")private WebElement AddServiceLine;
+	//This xpath is case insensitive
+	@FindBy(xpath="//span[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'add group')]")private WebElement AddGroup;
+	@FindBy(xpath="//span[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'add product line')]")private WebElement AddProductLine;
+	@FindBy(xpath="//span[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'add service line')]")private WebElement AddServiceLine;
 	@FindBy(xpath="//label[text()='Quantity']")private WebElement getProductTitle;
 	@FindBy(xpath="//label[text()='Name']")private WebElement getServiceTitle;
 	@FindBy(xpath="//div[@id='panel1bh-content']//input[@id='total_amount']")private WebElement GrandTotalProductPrice;
@@ -55,31 +57,31 @@ public class Add_Quotes
 	
 	
 	//Xpath for ADD PRODUCT LINE
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='product_qty']")private WebElement ProductLineQuantity;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-aos_products']")private WebElement SearchIconProducts;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='aos_products']")private WebElement Products;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'product_qty')]")private WebElement ProductLineQuantity;
+	@FindBy(xpath="//*[local-name()='svg' and contains(@id,'aos_products')]")private WebElement SearchIconProducts;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'aos_products')]")private WebElement Products;
 	@FindBy(xpath="//input[@id='part_number']")private WebElement PartNumber;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='product_list_price']")private WebElement ProductLineListPrice;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='product_discount']")private WebElement ProductLineDiscount;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='discount']")private WebElement ProductLineDiscountType;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='product_unit_price']")private WebElement UnitPrice;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='vat_amt']")private WebElement TaxAmount;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='product_total_price']")private WebElement TotalProductPrice;
-	@FindBy(xpath="//label[text()='Quantity']/../../..//input[@id='vat']")private WebElement ProductLineTax;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'product_list_price')]")private WebElement ProductLineListPrice;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'product_discount')]")private WebElement ProductLineDiscount;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'discount')]")private WebElement ProductLineDiscountType;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'product_unit_price')]")private WebElement UnitPrice;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'vat_amt')]")private WebElement TaxAmount;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id',product_total_price')]")private WebElement TotalProductPrice;
+	@FindBy(xpath="//label[text()='Quantity']/../../..//input[contains(@id,'vat')]")private WebElement ProductLineTax;
 	@FindBy(xpath="//label[text()='Quantity']/../../..//button[@aria-label='delete']")private WebElement ProductLineDeleteIcon;
 	@FindBy(xpath="//label[text()='Quantity']/../../..//button[@aria-label='show more']")private WebElement ProductLineShowMoreIcon;
 	@FindBy(xpath="//label[text()='Quantity']/../../..//textarea[@id='item_description']")private WebElement ProductLineItemDescription;
 	
 	//Xpath for ADD SERVICE LINE
 	@FindBy(xpath="//label[text()='Name']/../../..//textarea[@id='name']")private WebElement ServiceLineName;
-	@FindBy(xpath="//label[text()='Name']/../../..//input[@id='product_list_price']")private WebElement ServiceLineListPrice;
-	@FindBy(xpath="//label[text()='Name']/../../..//input[@id='product_discount']")private WebElement ServiceLineDiscount;
-	@FindBy(xpath="//label[text()='Name']/../../..//input[@id='discount']")private WebElement ServiceLineDiscountType;
-	@FindBy(xpath="//label[text()='Name']/../../..//input[@id='vat']")private WebElement ServiceLineTax;
+	@FindBy(xpath="//label[text()='Name']/../../..//input[contains(@id,'product_list_price')]")private WebElement ServiceLineListPrice;
+	@FindBy(xpath="//label[text()='Name']/../../..//input[contains(@id,'product_discount')]")private WebElement ServiceLineDiscount;
+	@FindBy(xpath="//label[text()='Name']/../../..//input[contains(@id,'discount')]")private WebElement ServiceLineDiscountType;
+	@FindBy(xpath="//label[text()='Name']/../../..//input[contains(@id,'vat')]")private WebElement ServiceLineTax;
 	@FindBy(xpath="//label[text()='Name']/../../..//button[@aria-label='delete']")private WebElement ServiceLineDeleteIcon;
-	@FindBy(xpath="//label[text()='Name']/../../..//input[@id='product_unit_price']")private WebElement ServiceUnitPrice;
-	@FindBy(xpath="//label[text()='Name']/../../..//input[@id='vat_amt']")private WebElement ServiceTaxAmount;
-	@FindBy(xpath="//label[text()='Name']/../../..//input[@id='product_total_price']")private WebElement ServiceTotalProductPrice;
+	@FindBy(xpath="//label[text()='Name']/../../..//input[contains(@id,'product_unit_price')]")private WebElement ServiceUnitPrice;
+	@FindBy(xpath="//label[text()='Name']/../../..//input[contains(@id,'vat_amt')]")private WebElement ServiceTaxAmount;
+	@FindBy(xpath="//label[text()='Name']/../../..//input[contains(@id,'product_total_price')]")private WebElement ServiceTotalProductPrice;
 
 	//Xpath for Email Quotation
 	
@@ -173,11 +175,11 @@ public class Add_Quotes
 	
 	}
 	
-	/*public void enterApprovalIssue(String approvalIssue)
+	public void enterApprovalIssue(String approvalIssue)
 	{
 		ApprovalIssue.sendKeys(approvalIssue);
 		
-	}*/
+	}
 	public void selectKnight(WebDriver driver, String knight) throws InterruptedException
 	{
 		SearchIconKnight.click();
@@ -311,7 +313,7 @@ public class Add_Quotes
 		ProductLineShowMoreIcon.click();
 	}
 	
-	public void enterDescription(String description)
+	public void enterProductDescription(String description)
 	{
 		ProductLineItemDescription.sendKeys(description);
 	}
@@ -368,6 +370,10 @@ public class Add_Quotes
 	public void enterShippingAmount(String shippingAmount)
 	{
 		ShippingAmount.sendKeys(shippingAmount);
+	}
+	public void enterDescription(String description)
+	{
+		Description.sendKeys(description);
 	}
 	
 	public void selectShippingTax(WebDriver driver, String Tax)

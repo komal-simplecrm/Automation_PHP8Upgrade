@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.NoSuchElementException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.testng.annotations.BeforeMethod;
@@ -32,6 +33,7 @@ public class DocumentsTestClass extends Base_Class
 	Add_Opportunities add_Opportunities;
 	Duplicate_Document_Page duplicate_document;
 	Duplicate_Page duplicate;
+	
 	
 	@BeforeMethod(alwaysRun = true)
 	public void OpenBrowser() throws InterruptedException
@@ -65,7 +67,7 @@ public class DocumentsTestClass extends Base_Class
 						.assignCategory("Functional Test Case").assignDevice("Chrome");
 				
 				 test.info("Create multiple documents records");
-				 for(int i=1;i<=8;i++)
+				 for(int i=6;i<=8;i++)
 					{
 					 	
 					 
@@ -81,7 +83,7 @@ public class DocumentsTestClass extends Base_Class
 						documents.uploadFile(driver, UtilityClass.fetchDataFromExcelSheet("Documents",i,11));
 						String documentName = duplicate_document.getDocument_Name();
 						soft.assertNotNull(documentName);
-						
+						test.info(documentName+ " document is tring to upload.");
 						documents.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("Documents",i,0));
 						//documents.enterRevision(UtilityClass.fetchDataFromExcelSheet("Documents",i,1));
 						documents.selectDocument_type(driver, UtilityClass.fetchDataFromExcelSheet("Documents",i,2));
@@ -97,7 +99,7 @@ public class DocumentsTestClass extends Base_Class
 						create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Documents",i,10));
 						
 						create_Lead.clickOnSavebtn();
-						test.info(documentName+" file uploded successfully.");
+						list_View.getAlertMessage(documentName);
 						Thread.sleep(7000);
 						add_Opportunities.backToListView();
 						Thread.sleep(4000);
@@ -184,7 +186,7 @@ public class DocumentsTestClass extends Base_Class
 				}
 				 
 				//Test case for Delete Document From Edit Option functionality
-				@Test(groups= {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateDocument"})
+				@Test( groups= {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateDocument"})
 				public void DeleteDocumentFromEditOption() throws Exception
 				{
 					//Create this test case in Extent Report
@@ -216,7 +218,7 @@ public class DocumentsTestClass extends Base_Class
 					}
 				}
 				
-				@Test(groups={"Duplicate"})
+				@Test( groups={"Duplicate"})
 				public void DuplicateDocument() throws InterruptedException, EncryptedDocumentException, IOException, AWTException
 				{	
 					//Create this test case in Extent Report
@@ -294,7 +296,7 @@ public class DocumentsTestClass extends Base_Class
 			}
 				
 				//Test case for Export functionality
-				@Test( groups = {"Export", "Sanity"})
+				@Test(groups = {"Export", "Sanity"})
 				public void ExportRecordsForDocuments() throws Exception
 				{
 					//Create this test case in Extent Report
@@ -321,7 +323,7 @@ public class DocumentsTestClass extends Base_Class
 					String input1="Test5.txt";
 					list_View.clickOnFilter(driver,"",input1,"Documents");
 					Thread.sleep(5000);
-					list_View.massUpdate(driver, "Test5.txt", "rahul thakre" );
+					list_View.massUpdate(driver, "Test5.txt", "Rahul Thakre" );
 					
 				}	
 				

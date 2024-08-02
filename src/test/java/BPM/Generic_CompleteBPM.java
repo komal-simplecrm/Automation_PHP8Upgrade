@@ -74,7 +74,7 @@ public class Generic_CompleteBPM extends Base_Class
 		
 		
 		int sub = 1;
-		for(int k=10;k<12;k++)//k=10;k<12- Complaint BPM//k=1;k<6- Service request
+		for(int k=1;k<6;k++)//k=10;k<12- Complaint BPM//k=1;k<6- Service request
 		{
 			try {	
 					int i = 0;
@@ -95,10 +95,10 @@ public class Generic_CompleteBPM extends Base_Class
 					Thread.sleep(2000);
 					cases.selectPriority(driver, UtilityClass.fetchDataFromExcelSheet("Cases",1, 0));
 					cases.selectState(driver, UtilityClass.fetchDataFromExcelSheet("Cases",1, 1), UtilityClass.fetchDataFromExcelSheet("Cases",1, 2),UtilityClass.fetchDataFromExcelSheet("Cases",1, 7));
-					cases.selectType(driver, UtilityClass.fetchDataFromExcelSheet("Cases",3, 3));
+					cases.selectType(driver, UtilityClass.fetchDataFromExcelSheet("Cases",1, 3));
 					add_Opportunities.enterAccountName(driver,UtilityClass.fetchDataFromExcelSheet("Cases",sub, 4));
-					cases.clickOnGeneralFeedbackforSubject();
-					String subject=duplicate_case.getSubject();
+					cases.clickOnGeneralFeedbackforSubject(driver,UtilityClass.fetchDataFromExcelSheet("Cases",1, 9));
+					String subject = duplicate_case.getSubject();
 					soft.assertNotNull(subject);
 					Thread.sleep(2000);
 					create_Lead.scrollpage(driver);

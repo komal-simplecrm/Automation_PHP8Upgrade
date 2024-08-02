@@ -6,7 +6,7 @@
 </listeners>
   <test thread-count="5" name="Test">
     <classes>
-      <class name="Task_Module.TaskTestClass"/>
+      <class name="Leads_Module.LeadsTestClass"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -133,7 +133,7 @@ public class InvoiceTestClass extends Base_Class
 					quotes.selectShippingTax(driver, UtilityClass.fetchDataFromExcelSheet("Invoices",i,31));
 					create_Lead.scrollpage(driver);
 					create_Lead.clickOnSavebtn();
-					test.info(quote+ " invoice is created.");
+					list_View.getAlertMessage(quote);
 					//back to list view of Account module
 					
 					Thread.sleep(7000);

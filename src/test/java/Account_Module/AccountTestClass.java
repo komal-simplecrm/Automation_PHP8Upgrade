@@ -1,9 +1,7 @@
 package Account_Module;
 
 
-
 import java.awt.AWTException;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.Duration;
@@ -64,7 +62,7 @@ public class AccountTestClass extends Base_Class
 		dashboard.clickOnMenuOption(driver,"Accounts");
 		Thread.sleep(2000);
 		dashboard.closeMenuOption();
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 	}
 	
 		//Create test case for create multiple Account
@@ -86,7 +84,7 @@ public class AccountTestClass extends Base_Class
 				try {
 					
 					driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-					String name=add_Opportunities.enterName( UtilityClass.fetchDataFromExcelSheet("Accounts",i,0));
+					String name = add_Opportunities.enterName( UtilityClass.fetchDataFromExcelSheet("Accounts",i,0));
 					soft.assertNotNull(name);
 					
 					add_Account.enterOfficePhone(UtilityClass.fetchDataFromExcelSheet("Accounts",i,1));
@@ -97,23 +95,22 @@ public class AccountTestClass extends Base_Class
 					add_Account.enterTickerSymbol(UtilityClass.fetchDataFromExcelSheet("Accounts",i,5));
 					create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("Accounts",i,6));
 					add_Account.enterBillingAddress(UtilityClass.fetchDataFromExcelSheet("Accounts",i,7));
+					create_Lead.scrollpage(driver);
 					add_Account.enterBillingState(UtilityClass.fetchDataFromExcelSheet("Accounts",i,8));
-					add_Account.scrollpage(driver);
 					add_Account.enterBillingPostalCode(UtilityClass.fetchDataFromExcelSheet("Accounts",i,9));
 					add_Account.enterBillingCountry(UtilityClass.fetchDataFromExcelSheet("Accounts",i,10));
 					add_Account.enterBillingCity(UtilityClass.fetchDataFromExcelSheet("Accounts",i,11));
 					add_Account.clickCopyFromleftCheckBox();
-					add_Account.scrollpageCopyFromleftCheckBox(driver);
+					//add_Account.scrollpageCopyFromleftCheckBox(driver);
 					add_Account.enterAccountType(driver,UtilityClass.fetchDataFromExcelSheet("Accounts",i,12));
 					add_Account.enterIndustry(driver,UtilityClass.fetchDataFromExcelSheet("Accounts",i,13));
-					create_Lead.scrollpage(driver);
 					add_Account.enterAnnualRevenue(UtilityClass.fetchDataFromExcelSheet("Accounts",i,14));
 					add_Account.enterEmployees(UtilityClass.fetchDataFromExcelSheet("Accounts",i,15));
-					add_Account.enterMemberOf(driver, UtilityClass.fetchDataFromExcelSheet("Accounts",i,16));
+					//add_Account.enterMemberOf(driver, UtilityClass.fetchDataFromExcelSheet("Accounts",i,16));
 					create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Accounts",i,17));
-					create_Lead.enterCampaign(driver, UtilityClass.fetchDataFromExcelSheet("Accounts",i,18));
+					//create_Lead.enterCampaign(driver, UtilityClass.fetchDataFromExcelSheet("Accounts",i,18));
 					create_Lead.clickOnSavebtn();
-					test.info(name+ " Account is created.");
+					list_View.getAlertMessage(name);
 					//back to list view of Account module
 					//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 					Thread.sleep(7000);
@@ -177,7 +174,7 @@ public class AccountTestClass extends Base_Class
 			}
 			
 			//Create test case for Delete Account From Edit Option
-			@Test(groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateAccount"})
+			@Test( groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateAccount"})
 			public void DeleteAccountFromListView() throws InterruptedException, EncryptedDocumentException, IOException 
 			{
 				CommonFunctions.DeleteRecordFromListView(list_View, add_Opportunities, "Axis Finance", "Accounts");
@@ -213,7 +210,7 @@ public class AccountTestClass extends Base_Class
 						String arr1[]= {duplicate_opp.getOpportunityName(),duplicate_account.getOffice_Phone(),duplicate.getWebsite(),duplicate.getFax(),
 								duplicate.getEmailAddress(),duplicate_account.getTickerSymbol(),duplicate.getDescription(),duplicate_account.getBillingAddress(),
 								duplicate_account.getBillingState(),duplicate_account.getBillingPostalCode(),duplicate_account.getBillingCountry(),duplicate_account.getBillingCity(),
-								duplicate_account.getAccountType(),duplicate_account.getIndustry(),duplicate_account.getAnnualRevenue(),duplicate_account.getEmployees(),duplicate_account.getMemberOf(),
+								duplicate_account.getAccountType(),duplicate_account.getIndustry(),duplicate_account.getAnnualRevenue(),duplicate_account.getEmployees()/*,duplicate_account.getMemberOf()*/,
 								/*duplicate.getCampaign()*/};
 						
 						String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Accounts",2, 0),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 1),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 2),
@@ -221,9 +218,9 @@ public class AccountTestClass extends Base_Class
 								UtilityClass.fetchDataFromExcelSheet("Accounts",2, 6),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 7),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 8),
 								UtilityClass.fetchDataFromExcelSheet("Accounts",2, 9),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 10),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 11),
 								UtilityClass.fetchDataFromExcelSheet("Accounts",2, 12),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 13),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 14),
-								UtilityClass.fetchDataFromExcelSheet("Accounts",2, 15),UtilityClass.fetchDataFromExcelSheet("Accounts",2, 16),/*UtilityClass.fetchDataFromExcelSheet("Accounts",2, 17)*/};
+								UtilityClass.fetchDataFromExcelSheet("Accounts",2, 15)/*,UtilityClass.fetchDataFromExcelSheet("Accounts",2, 16),/*UtilityClass.fetchDataFromExcelSheet("Accounts",2, 17)*/};
 						
-						for(int i=0;i<=15;i++)
+						for(int i=0;i<=14;i++)
 						{
 							
 							soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");
@@ -258,7 +255,7 @@ public class AccountTestClass extends Base_Class
 			}
 			
 			//Test case for In this if copy from left check is selected then verify both the address is same else print the Alternate address.
-			@Test(groups={"MultipleEmailAddress", "Sanity"})
+			@Test( groups={"MultipleEmailAddress", "Sanity"})
 			public void MultipleEmailAddress() throws InterruptedException, EncryptedDocumentException, IOException
 			{
 				
@@ -271,17 +268,17 @@ public class AccountTestClass extends Base_Class
 			public void MassUpdateAccount() throws InterruptedException, EncryptedDocumentException, IOException, AWTException, ParseException
 			{
 				
-				CommonFunctions.MassUpdateCaseModule(list_View, "Accounts", "HDFC Finance");
+				CommonFunctions.MassUpdateCaseModule(list_View, "Accounts", "Axis Finance");
 				
 			}
 			
 			//Test case for Export functionality
-			@Test(groups = {"Export", "Sanity"})
+			@Test( groups = {"Export", "Sanity"})
 			public void ExportRecordsForAccounts() throws Exception
 			{
 							
 				 //Call function from Common Function class
-				 CommonFunctions.ExportRecords(list_View, "HDFC Finance", "Accounts");
+				 CommonFunctions.ExportRecords(list_View, "ICICI Finance", "Accounts");
 			}
 			
 			

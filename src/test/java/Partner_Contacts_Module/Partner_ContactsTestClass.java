@@ -112,6 +112,7 @@ public class Partner_ContactsTestClass extends Base_Class
 	
 	
 				create_Lead.clickOnSavebtn();
+				list_View.getAlertMessage(lastname);
 				Thread.sleep(7000);
 				add_Opportunities.backToListView();
 				Thread.sleep(4000);
@@ -129,7 +130,7 @@ public class Partner_ContactsTestClass extends Base_Class
 	
 	
 		//Test case for Edit functionality
-		@Test(  groups={"Edit", "Sanity"})
+		@Test( groups={"Edit", "Sanity"})
 		public void EditPartnerContacts() throws EncryptedDocumentException, IOException, InterruptedException
 		{
 			//Create this test case in Extent Report
@@ -166,7 +167,7 @@ public class Partner_ContactsTestClass extends Base_Class
 			}
 		
 	//Create test case for Delete Partner_Contacts From Edit Option
-	@Test( groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreatePartner_Contacts"})
+	@Test(groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreatePartner_Contacts"})
 	public void DeletePartnerContactsFromEditOption() throws Exception 
 	{
 			CommonFunctions.DeleteRecordFromEditOption(dashboard, list_View, add_Opportunities,"Sona Patel", "Partner_Contacts");		
@@ -182,7 +183,7 @@ public class Partner_ContactsTestClass extends Base_Class
 	}
 	
 	//Test case for Verify record us duplicate functionality
-	@Test(  groups={"Duplicate"})
+	@Test( groups={"Duplicate"})
 	public void DuplicatePartnerContacts() throws InterruptedException, EncryptedDocumentException, IOException
 	{	
 		//Create this test case in Extent Report
@@ -227,7 +228,7 @@ public class Partner_ContactsTestClass extends Base_Class
 	}
 	
 	//Test case for In this if copy from left check is selected then verify both the address is same else print the Alternate address.
-	@Test( groups={"alternteAddress"})
+	@Test(groups={"alternteAddress"})
 	public void alternteAddress() throws InterruptedException, EncryptedDocumentException, IOException, AWTException
 	{
 			CommonFunctions.alternteAddress(dashboard, list_View, duplicate, "John Kaif");

@@ -5,12 +5,13 @@ import java.text.ParseException;
 
 
 import org.apache.commons.exec.util.StringUtils;
-
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import Library_Files.CommonFunctions;
 import Library_Files.UtilityClass;
 
 public class Duplicate_Opp_Page 
@@ -18,9 +19,8 @@ public class Duplicate_Opp_Page
 	//Data members should be declare globally with access level private by using @findBy annotation
 	@FindBy(xpath="//input[@id='name']")private WebElement OpportunityName;
 	@FindBy(xpath="//input[@id='account_name']")private WebElement AccountName;
-	@FindBy(xpath="//div[@id='currency_id']")private WebElement Currency;
+	@FindBy(xpath="//input[@id='currency_id']")private WebElement Currency;
 	@FindBy(xpath="//input[@id='date_closed']")private WebElement Date_closed;
-			
 	@FindBy(xpath="//input[@id='amount']")private WebElement OpportunityAmount;
 	@FindBy(xpath="//input[@id='opportunity_type']")private WebElement Type;
 	@FindBy(xpath="//input[@id='sales_stage']")private WebElement SalesStage;
@@ -58,7 +58,7 @@ public class Duplicate_Opp_Page
 			
 			public String getCurrency()
 			{
-				String C = Currency.getText();
+				String C = CommonFunctions.GetText(Currency);
 				return C;
 			}
 			

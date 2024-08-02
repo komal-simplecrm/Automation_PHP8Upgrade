@@ -33,7 +33,7 @@ public class Add_Documents
 		@FindBy(xpath="//button[@id='exp_date']")private WebElement Exp_Date;
 		@FindBy(xpath="//input[@id='category_id']") private WebElement Category;
 		@FindBy(xpath="//input[@id='subcategory_id']") private WebElement Subcategory;
-		@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-related_doc_name']") private WebElement Related_doc;
+		@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-related_doc_name']") private WebElement Related_doc;
 		@FindBy(xpath="//div[@role='dialog']//input[@id='document_name']") private WebElement Document_name;
 		@FindBy(xpath="//button[@form='relate-search-form']")private WebElement SearchOnWindow;
 		@FindBy(xpath="//input[@id='contract_name']") private WebElement ContractName;

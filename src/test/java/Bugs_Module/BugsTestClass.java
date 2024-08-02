@@ -93,7 +93,7 @@ public class BugsTestClass extends Base_Class
 						bugs.enterWork_log( UtilityClass.fetchDataFromExcelSheet("Bugs",i, 8));
 						create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Bugs",i, 9));
 						create_Lead.clickOnSavebtn();
-						test.info(subject+ " Bug is created.");
+						list_View.getAlertMessage(subject);
 						Thread.sleep(7000);
 						add_Opportunities.backToListView();
 						Thread.sleep(4000);

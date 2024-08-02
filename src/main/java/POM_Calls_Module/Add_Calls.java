@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import Library_Files.UtilityClass;
 
 
@@ -18,6 +17,7 @@ public class Add_Calls
 	@FindBy(xpath="//input[@id='name']") private WebElement Subject;
 	@FindBy(xpath="//input[@id='status']") private WebElement Status;
 	@FindBy(xpath="//input[@id='duration_hours']") private WebElement Duration_Hours;
+	@FindBy(xpath="//input[@id='duration']") private WebElement Duration;
 	@FindBy(xpath="//input[contains(@class,'MuiSwitch-input')]") private WebElement Popup;
 	@FindBy(xpath="//div[@id='reminder_time']") private WebElement Reminder_Time;
 	@FindBy(xpath="//div[@id='email_reminder_time']") private WebElement EmailReminder_Time;
@@ -26,8 +26,8 @@ public class Add_Calls
 	@FindBy(xpath="//span[text()='Add Reminder']") private WebElement Add_Reminder;
 	@FindBy(xpath="//p[text()='Reminder Time:']/..//span[contains(text(),'Popup')]/..//input[contains(@class,'MuiSwitch-input')]") private WebElement PopUpRadioBtn;
 	@FindBy(xpath="//p[text()='Reminder Time:']/..//span[contains(text(),'Email')]/..//input[contains(@class,'MuiSwitch-input')]") private WebElement EmailRadioBtn;
-	@FindBy(xpath="//p[text()='Reminders:']/..//span[contains(text(),'Popup')]/..//input[contains(@class,'MuiSwitch-input')]") private WebElement PopUpRadioBtnReminders;
-	@FindBy(xpath="//p[text()='Reminders:']/..//span[contains(text(),'Email')]/..//input[contains(@class,'MuiSwitch-input')]") private WebElement EmailRadioBtnReminders;
+	@FindBy(xpath="//label[contains(text(),'Reminder')]/..//label[contains(text(),'Popup')]/..//input[contains(@class,'PrivateSwitchBase')]") private WebElement PopUpRadioBtnReminders;
+	@FindBy(xpath="//label[contains(text(),'Reminder')]/..//label[contains(text(),'Email')]/..//input[contains(@class,'PrivateSwitchBase')]") private WebElement EmailRadioBtnReminders;
 	@FindBy(xpath="//div[@id='timer_popup0']") private WebElement Time_popup;
 	//@FindBy(xpath="//div[@id='reminders']") private WebElement Reminders;
 	@FindBy(xpath="//input[@id='asterisk_caller_id_c']") private WebElement Caller_id;
@@ -50,8 +50,8 @@ public class Add_Calls
 	@FindBy(xpath="//form[@id='filter-form']//button[@id='start_range_date_entered']")private WebElement StartDateCreated;
 	@FindBy(xpath="//form[@id='filter-form']//button[@id='end_range_date_entered']")private WebElement EndDateCreated;
 	@FindBy(xpath="//form[@id='filter-form']//button[@id='range_date_entered']")private WebElement DateCreatedDynamicField;	
-	@FindBy(xpath="//p[text()='Reminders:']")private WebElement RemainderWord;
-	@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-assigned_user_name']")private WebElement AssignedToSearchIcon;
+	@FindBy(xpath="//label[contains(text(),'Reminder')]")private WebElement RemainderWord;
+	@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-assigned_user_name']")private WebElement AssignedToSearchIcon;
 	//Initialize the constructor with access level public using PageFactory class
 	public Add_Calls(WebDriver driver)
 	{
@@ -89,6 +89,13 @@ public class Add_Calls
 		return duration;
 	
 	}
+	public String enterDuration(WebDriver driver, String hours)
+	{
+		Duration.click();
+		driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+hours+"']")).click();
+		String duration = Duration.getAttribute("value");
+		return duration;
+	}
 	
 	public void selectPopUpRadioBtn(WebDriver driver, String timePrior)
 	{
@@ -97,7 +104,7 @@ public class Add_Calls
 		if(result==true)
 		{
 			Reminder_Time.click();
-			driver.findElement(By.xpath("//ul[@role='listbox']//li//span[text()='"+timePrior+"']")).click();
+			driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+timePrior+"']")).click();
 		}
 		else 
 		{
@@ -112,7 +119,7 @@ public class Add_Calls
 		if(result==true)
 		{
 			EmailReminder_Time.click();
-			driver.findElement(By.xpath("//ul[@role='listbox']//li//span[text()='"+timePrior+"']")).click();
+			driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+timePrior+"']")).click();
 		}
 		else 
 		{
@@ -133,18 +140,18 @@ public class Add_Calls
 		if(result==true)
 		{
 			//Time_popup.click();
-			driver.findElement(By.xpath("//div[@id='timer_popup"+i+"']")).click();
+			driver.findElement(By.xpath("//input[@id='timer_popup"+i+"']")).click();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//ul[@role='listbox']//li//span[text()='"+timePrior+"']")).click();
+			driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+timePrior+"']")).click();
 		}
 		else 
 		{
 			System.out.println("Popup Radio Button is not selected");
 			PopUpRadioBtnReminders.click();
 			//Time_popup.click();
-			driver.findElement(By.xpath("//div[@id='timer_popup"+i+"']")).click();
+			driver.findElement(By.xpath("//input[@id='timer_popup"+i+"']")).click();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//ul[@role='listbox']//li//span[text()='"+timePrior+"']")).click();
+			driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+timePrior+"']")).click();
 		}
 	}
 	
@@ -155,18 +162,18 @@ public class Add_Calls
 		if(result==true)
 		{
 			//Reminders.click();
-			driver.findElement(By.xpath("//div[@id='reminder-card-"+i+"']//div[@id='reminders']")).click();
+			driver.findElement(By.xpath("//div[@id='reminder-card-"+i+"']//input[@id='timer_email"+i+"']")).click();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//ul[@role='listbox']//li//span[text()='"+timePrior+"']")).click();
+			driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+timePrior+"']")).click();
 		}
 		else 
 		{
 			System.out.println("Email Radio Button is not selected");
 			EmailRadioBtnReminders.click();
 			//Reminders.click();
-			driver.findElement(By.xpath("//div[@id='reminder-card-"+i+"']//div[@id='reminders']")).click();
+			driver.findElement(By.xpath("//div[@id='reminder-card-"+i+"']//input[@id='timer_email"+i+"']")).click();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//ul[@role='listbox']//li//span[text()='"+timePrior+"']")).click();
+			driver.findElement(By.xpath("//ul[@role='listbox']//li[text()='"+timePrior+"']")).click();
 		}
 	}
 	
@@ -221,7 +228,7 @@ public class Add_Calls
 		SearchBtnOnWindow2.click();
 		Thread.sleep(7000);
 		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",SearchBtnOnWindow2);
-		WebElement name = driver.findElement(By.xpath("//table[@role='grid']//tbody//td//a[contains(text(),'"+nameOfInvitees+"')]"));
+		//WebElement name = driver.findElement(By.xpath("//table[@role='grid']//tbody//td//a[contains(text(),'"+nameOfInvitees+"')]"));
 		WebElement checkBox = driver.findElement(By.xpath("(//table[@role='grid']//tbody//td//a[contains(text(),'"+nameOfInvitees+"')]/../../../..//input)[1]"));
 		//Thread.sleep(2000);
 		//((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",name);
@@ -282,7 +289,7 @@ public class Add_Calls
 	}
 	public void scrollUpTotime(WebDriver driver, int i)
 	{
-		WebElement removeRemainder = driver.findElement(By.xpath("//div[@id='reminder-card-"+i+"']//div[@id='timer_popup"+i+"']"));
+		WebElement removeRemainder = driver.findElement(By.xpath("//div[@id='reminder-card-"+i+"']//input[@id='timer_popup"+i+"']"));
 		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",removeRemainder);
 	}
 	

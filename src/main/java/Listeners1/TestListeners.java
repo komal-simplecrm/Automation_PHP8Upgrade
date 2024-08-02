@@ -1,31 +1,17 @@
 package Listeners1;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Calendar;
-
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.io.FileHandler;
 import org.testng.ITestContext;
-
 import org.testng.ITestResult;
-import org.testng.Reporter;
 import org.testng.TestListenerAdapter;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-
-import Library_Files.Base_Class;
-import Library_Files.UtilityClass;
-
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+
 public class TestListeners extends TestListenerAdapter
 {
 	public static WebDriver driver;

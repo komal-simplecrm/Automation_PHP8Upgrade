@@ -4,19 +4,30 @@
   <test thread-count="5" name="Test(failed)">
     <groups>
       <run>
-        <include name="Export"/>
+        <include name="MassUpdate"/>
+        <include name="AddMultipleRemainders"/>
+        <include name="AddMulitpleInviteesInRemainder"/>
       </run>
     </groups>
     <classes>
-      <class name="Partner_Contacts_Module.Partner_ContactsTestClass">
+      <class name="Notes_Module.NotesTestClass">
         <methods>
           <include name="extentReport"/>
           <include name="OpenBrowser"/>
           <include name="initializeBrowser"/>
-          <include name="ExportRecordsForPartner_Contacts"/>
+          <include name="MassUpdateNotesModule"/>
           <include name="getResult"/>
         </methods>
-      </class> <!-- Partner_Contacts_Module.Partner_ContactsTestClass -->
+      </class> <!-- Notes_Module.NotesTestClass -->
+      <class name="Cases_Module.CasesTestClass">
+        <methods>
+          <include name="extentReport"/>
+          <include name="initializeBrowser"/>
+          <include name="OpenBrowser"/>
+          <include name="MassUpdateCaseModule"/>
+          <include name="getResult"/>
+        </methods>
+      </class> <!-- Cases_Module.CasesTestClass -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [test_suite] -->

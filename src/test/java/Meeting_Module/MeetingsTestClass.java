@@ -64,7 +64,7 @@ public class MeetingsTestClass extends Base_Class
 	}
 	
 	 		//Create test case for create multiple Account
-			@Test(enabled= false, groups={"Create", "Sanity"})
+			@Test( groups={"Create", "Sanity"})
 			public void CreateMeetings() throws Exception 
 			{
 				//Create this test case in Extent Report
@@ -81,45 +81,41 @@ public class MeetingsTestClass extends Base_Class
 					SoftAssert soft=new SoftAssert();
 					try {
 						
-						driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+							driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 						
-						String subject = calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 0));
-						System.out.println("subject: "+UtilityClass.fetchDataFromExcelSheet("Meetings", i, 0));
-						soft.assertNotNull(subject);
+							String subject = calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 0));
+							System.out.println("subject: "+UtilityClass.fetchDataFromExcelSheet("Meetings", i, 0));
+							soft.assertNotNull(subject);
+							create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 9));
+							task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 2), UtilityClass.fetchDataFromExcelSheet("Meetings", i, 3));
+							meeting.selectDateEnd(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 6), UtilityClass.fetchDataFromExcelSheet("Meetings", i, 7));
+							calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 1));
+							calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 8));
+							task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 4), UtilityClass.fetchDataFromExcelSheet("Meetings", i, 5));
+							create_Lead.scrollpage(driver);
+							//meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 20));
+							//calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 8));
 						
-						calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 1));
+							//calls.scrollpageuptoDuration(driver);
+							//calls.clickOnAdd_Reminder();
+							String a[]= {"Users","Contacts","Leads"};
+							int k = 14;
+							for(int j=0;j<=2;j++)
+							{
+									calls.addInviteesInRemainder(driver, 0, a[j], UtilityClass.fetchDataFromExcelSheet("calls", i, k));
+									k=k+2;	
+							}
+							Thread.sleep(5000);
 						
-						task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 2), UtilityClass.fetchDataFromExcelSheet("Meetings", i, 3));
-						
-						task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 4), UtilityClass.fetchDataFromExcelSheet("Meetings", i, 5));
-						
-						meeting.selectDateEnd(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 6), UtilityClass.fetchDataFromExcelSheet("Meetings", i, 7));
-						meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 20));
-						//calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 8));
-						meeting.selectDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 8));
-						calls.scrollpageuptoDuration(driver);
-						calls.clickOnAdd_Reminder();
-						String a[]= {"Users","Contacts","Leads"};
-						int k = 14;
-						for(int j=0;j<=2;j++)
-						{
-						calls.addInviteesInRemainder(driver, 0, a[j], UtilityClass.fetchDataFromExcelSheet("calls", i, k));
-						k=k+2;	
-						}
-						Thread.sleep(5000);
-						
-						calls.entertimebefore(driver, UtilityClass.fetchDataFromExcelSheet("Meetings",i, 11), 0);
-						calls.scrollUpToAdd_Reminder(driver);
-						create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("Meetings", i, 9));
-						create_Lead.scrollpage(driver);
-						create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 10));
-						
-						create_Lead.clickOnSavebtn();
-						test.info(subject+ " meeting is created");
-						Thread.sleep(7000);
-						add_Opportunities.backToListView();
-						Thread.sleep(4000);
-						list_View.scrolluptoAddBtn(driver);
+							calls.entertimebefore(driver, UtilityClass.fetchDataFromExcelSheet("Meetings",i, 11), 0);
+							//calls.scrollUpToAdd_Reminder(driver);
+							create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", i, 10));
+							create_Lead.clickOnSavebtn();
+							list_View.getAlertMessage(subject);
+							Thread.sleep(7000);
+							add_Opportunities.backToListView();
+							Thread.sleep(4000);
+							list_View.scrolluptoAddBtn(driver);
 						
 						}
 					catch(NullPointerException e) 
@@ -132,7 +128,7 @@ public class MeetingsTestClass extends Base_Class
 			}
 			
 			//Create test case for Edit Account
-			@Test(enabled= false, groups={"Edit", "Sanity"})
+			@Test( groups={"Edit", "Sanity"})
 			public void EditMeeting() throws Exception 
 			{
 					//Create this test case in Extent Report
@@ -156,8 +152,8 @@ public class MeetingsTestClass extends Base_Class
 						create_Lead.scrollpage(driver);
 						create_Lead.clickOnSavebtn();
 						String msg=list_View.EveryPageAlert();
-						 test.info(msg+ " Message showing on CRM");
-						 test.info(input1+ " record is updated");
+						test.info(msg+ " Message showing on CRM");
+						test.info(input1+ " record is updated");
 					}
 					else
 					{
@@ -168,7 +164,7 @@ public class MeetingsTestClass extends Base_Class
 			}
 			
 			//Create test case for Delete Call From Edit Option
-			@Test(enabled= false, groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateMeetings"})
+			@Test( groups = {"DeleteFromEditView", "Sanity"}, dependsOnMethods={"CreateMeetings"})
 			public void DeleteMeetingsFromEditOption() throws Exception 
 			{
 				CommonFunctions.DeleteRecordFromEditOption(dashboard, list_View, add_Opportunities,"Test Meeting2", "Meetings");
@@ -177,7 +173,7 @@ public class MeetingsTestClass extends Base_Class
 			
 			
 			//Create test case for Delete Task From List View
-			@Test(enabled= false, groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateMeetings"})
+			@Test( groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateMeetings"})
 			public void DeleteMeetingsFromListView() throws InterruptedException, EncryptedDocumentException, IOException 
 			{
 				CommonFunctions.DeleteRecordFromListView(list_View, add_Opportunities, "Test Meeting1", "Meetings");
@@ -185,7 +181,7 @@ public class MeetingsTestClass extends Base_Class
 			}
 			
 			//Create the test case to add multiple Remainders with one User, Contact and Lead
-			@Test(enabled= false, groups = {"AddMultipleRemainders", "Sanity"})
+			@Test(groups = {"AddMultipleRemainders", "Sanity"})
 				
 			public void AddMultipleRemainders() throws Exception
 				
@@ -204,13 +200,12 @@ public class MeetingsTestClass extends Base_Class
 				calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 0));
 				calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 1));
 				task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 2), UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 3));
-				task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 4), UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 5));
-				
 				meeting.selectDateEnd(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 6), UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 7));
-				meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 20));
-				meeting.selectDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 8));
-			
-				calls.scrollpageuptoDuration(driver);
+				task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 4), UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 5));
+				//meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 20));
+				calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 8));
+				create_Lead.scrollpage(driver);
+				//calls.scrollpageuptoDuration(driver);
 				//Add Remainders function call from Common Functions class
 				CommonFunctions.Add_Remainder(calls, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 11), 14);
 				create_Lead.scrollpage(driver);
@@ -219,7 +214,7 @@ public class MeetingsTestClass extends Base_Class
 			
 			
 			//Create the test case to add one Remainders with Multiple Users, Contacts and Leads
-			@Test (enabled= false, groups= {"AddMulitpleInviteesInRemainder", "Sanity"})
+			@Test ( groups= {"AddMulitpleInviteesInRemainder", "Sanity"})
 			public void AddMulitpleInviteesInRemainder() throws Exception
 			{
 				//Create this test case in Extent Report
@@ -236,12 +231,12 @@ public class MeetingsTestClass extends Base_Class
 					calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("Meetings", 3, 0));
 					calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 1));
 					task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 2), UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 3));
-					task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 4), UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 5));
-					
 					meeting.selectDateEnd(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 6), UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 7));
-					meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 20));
-					meeting.selectDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 8));
-					calls.scrollpageuptoDuration(driver);
+					task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 4), UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 5));	
+					//meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 20));
+					calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 2, 8));
+					//calls.scrollpageuptoDuration(driver);
+					create_Lead.scrollpage(driver);
 					//Add Multiple Invites In Remainder function call from Common Functions class
 					CommonFunctions.AddMulitpleInviteesInRemainder(calls, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 11), 15);
 					
@@ -250,8 +245,8 @@ public class MeetingsTestClass extends Base_Class
 			}
 			
 			//Create the test case to Verify Call Is Duplicate?
-			@Test(enabled= false, groups={"Duplicate"})
-			public void DuplicateCalls() throws InterruptedException, EncryptedDocumentException, IOException, AWTException
+			@Test( groups={"Duplicate"})
+			public void DuplicateMeetings() throws InterruptedException, EncryptedDocumentException, IOException, AWTException
 			{	
 				//Create this test case in Extent Report
 				test= extent.createTest("Verify Meeting Is Duplicate?").assignAuthor("Komal")
@@ -264,6 +259,7 @@ public class MeetingsTestClass extends Base_Class
 				String input1 = scan1.nextLine();*/
 				String input1 = "Test meeting generate1";
 				list_View.enterTextInSearchBtn(driver,input1);
+				Thread.sleep(2000);
 				list_View.clickOnName(driver,input1);
 				
 				
@@ -327,14 +323,14 @@ public class MeetingsTestClass extends Base_Class
 			
 				String arr1[]= {duplicate_call.getSubject(),duplicate_call.getStatus(),ExactstartDate,starttime,
 						related,duplicate_task.getRelatedToDynamic(related),ExactEndDate, Endtime, meeting.getDuration(), 
-						meeting.getLocation(),duplicate_call.getPopUpRemainder(),duplicate_call.getEmailRemainder(),duplicate.getDescription()};
+						/*meeting.getLocation(),*/duplicate_call.getPopUpRemainder(),duplicate_call.getEmailRemainder(),duplicate.getDescription()};
 				String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Meetings",2, 0),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 1),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 2),
 						UtilityClass.fetchDataFromExcelSheet("Meetings",2, 3),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 4),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 5),
 						UtilityClass.fetchDataFromExcelSheet("Meetings",2, 6),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 7),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 8),
-						UtilityClass.fetchDataFromExcelSheet("Meetings",2, 20),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 11),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 11),
+						/*UtilityClass.fetchDataFromExcelSheet("Meetings",2, 20),*/UtilityClass.fetchDataFromExcelSheet("Meetings",2, 11),UtilityClass.fetchDataFromExcelSheet("Meetings",2, 11),
 						UtilityClass.fetchDataFromExcelSheet("Meetings",2, 9)};
 				
-				for(int i=0;i<13;i++)
+				for(int i=0;i<12;i++)
 				{
 					
 					soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");
@@ -359,7 +355,7 @@ public class MeetingsTestClass extends Base_Class
 			}
 			
 			//Test case for Mass update functionality
-			@Test(enabled= false,groups={"MassUpdate", "Sanity"})
+			@Test( groups={"MassUpdate", "Sanity"})
 			public void MassUpdateMeetings() throws InterruptedException, EncryptedDocumentException, IOException, AWTException, ParseException
 			{
 				

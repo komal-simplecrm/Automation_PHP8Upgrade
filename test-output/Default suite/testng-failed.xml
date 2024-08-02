@@ -3,15 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="BPM.Generic_CompleteBPM">
+      <class name="Opportunities_Module.OpportunitiesTestClass">
         <methods>
-          <include name="BPM_All_Functionality"/>
           <include name="extentReport"/>
           <include name="OpenBrowser"/>
+          <include name="DuplicateOpportunity"/>
           <include name="initializeBrowser"/>
           <include name="getResult"/>
         </methods>
-      </class> <!-- BPM.Generic_CompleteBPM -->
+      </class> <!-- Opportunities_Module.OpportunitiesTestClass -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

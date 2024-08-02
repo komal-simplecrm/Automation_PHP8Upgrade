@@ -87,7 +87,7 @@ public class CasesTestClass  extends Base_Class
 					Thread.sleep(2000);
 					cases.selectType(driver, UtilityClass.fetchDataFromExcelSheet("Cases",i, 3));
 					add_Opportunities.enterAccountName(driver,UtilityClass.fetchDataFromExcelSheet("Cases",i, 4));
-					cases.clickOnGeneralFeedbackforSubject();
+					cases.clickOnGeneralFeedbackforSubject(driver,UtilityClass.fetchDataFromExcelSheet("Cases",i, 9) );
 					String subject = duplicate_case.getSubject();
 					soft.assertNotNull(subject);
 					test.info(subject+ " Case is created.");
@@ -97,6 +97,7 @@ public class CasesTestClass  extends Base_Class
 					Thread.sleep(2000);
 					create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Cases",i, 8));
 					create_Lead.clickOnSavebtn();
+					list_View.getAlertMessage(subject);
 					Thread.sleep(7000);
 					soft.assertAll();
 					add_Opportunities.backToListView();
@@ -143,7 +144,7 @@ public class CasesTestClass  extends Base_Class
 	
 	
 		//Delete the case
-		@Test(  groups= {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateCase"})
+		@Test( groups= {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateCase"})
 		public void DeleteCaseFromListView() throws Exception
 		{
 			//Create this test case in Extent Report

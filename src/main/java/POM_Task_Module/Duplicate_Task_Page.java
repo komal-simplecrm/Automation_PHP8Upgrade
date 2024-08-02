@@ -13,9 +13,11 @@ public class Duplicate_Task_Page
 		@FindBy(xpath="//input[@id='date_start']")private WebElement Date_Start;
 		@FindBy(xpath="//input[@id='date_due']")private WebElement Date_Due;
 		@FindBy(xpath="//input[@id='parent_name']")private WebElement RelatedTo;
-		@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-parent_name']/../../../..//input[@id='parent_name']")private WebElement RelatedToDynamic;
+		@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-parent_name']/../../../..//input[@id='parent_name']")private WebElement RelatedToDynamic;
 		@FindBy(xpath="//input[@id='contact_name']")private WebElement Contact_Name;
 		@FindBy(xpath="//input[@id='priority']")private WebElement Priority;
+		@FindBy(xpath="//input[@id='estimated_effort_c']")private WebElement Estimated_Effort;
+		@FindBy(xpath="//input[@id='effort_c']")private WebElement Actual_Effort;
 		
 		//Initialize the constructor with access level public using PageFactory class
 		public Duplicate_Task_Page(WebDriver driver)
@@ -97,4 +99,20 @@ public class Duplicate_Task_Page
 			return priority;
 		
 		}
+		
+		public String getEstimatedEffort()
+		{
+			
+			String EstimatedEffort = Estimated_Effort.getAttribute("value");
+			return EstimatedEffort;
+		
+		}
+		
+		public String getEffort()
+		{
+			String Efforts  = Actual_Effort.getAttribute("value");
+			return Efforts;
+		
+		}
+		
 }

@@ -3,12 +3,10 @@ package Notes_Module;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.text.ParseException;
-
 import org.apache.poi.EncryptedDocumentException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import Library_Files.Base_Class;
 import Library_Files.CommonFunctions;
 import Library_Files.UtilityClass;
@@ -20,7 +18,6 @@ import POM_Lead_Module.Duplicate_Page;
 import POM_Lead_Module.Lead_ListView;
 import POM_Notes_Module.Add_Notes;
 import POM_Opportunities_Module.Add_Opportunities;
-import POM_Quote_Module.Add_Quotes;
 import POM_Task_Module.Add_Task;
 import POM_Task_Module.Duplicate_Task_Page;
 
@@ -64,7 +61,7 @@ public class NotesTestClass extends Base_Class
 	}
 	
 	//Create test case for create multiple Account
-	@Test(groups={"Create", "Sanity"})
+	@Test( groups={"Create", "Sanity"})
 	public void CreateNotes() throws Exception 
 	{
 		//Create this test case in Extent Report
@@ -82,11 +79,12 @@ public class NotesTestClass extends Base_Class
 			 
 				SoftAssert soft=new SoftAssert();
 			try {
+					
 					notes.selectContacts(driver, UtilityClass.fetchDataFromExcelSheet("Notes",i,0));
 					task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Notes",i,1), UtilityClass.fetchDataFromExcelSheet("Notes",i,2));
 					//notes.selectMessage(driver, UtilityClass.fetchDataFromExcelSheet("Notes",i,3));
 					String subject = task.enterSubject(UtilityClass.fetchDataFromExcelSheet("Notes",i,3));
-					notes.selectKnight(driver, UtilityClass.fetchDataFromExcelSheet("Notes",i,6));
+					//notes.selectKnight(driver, UtilityClass.fetchDataFromExcelSheet("Notes",i,6));
 					documents.uploadFile(driver, UtilityClass.fetchDataFromExcelSheet("Notes",i,4));
 				
 					soft.assertNotNull(subject);
@@ -98,7 +96,7 @@ public class NotesTestClass extends Base_Class
 					create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Notes",i,7));
 					
 					create_Lead.clickOnSavebtn();
-					test.info(subject+" Note is created successfully.");
+					list_View.getAlertMessage(subject);
 					Thread.sleep(4000);
 					add_Opportunities.backToListView();
 					Thread.sleep(4000);
@@ -115,7 +113,7 @@ public class NotesTestClass extends Base_Class
 		 
 	}	 
 	//Create test case for Edit Account
-	@Test( groups={"Edit", "Sanity"})
+	@Test(groups={"Edit", "Sanity"})
 	public void EditNote() throws InterruptedException, EncryptedDocumentException, IOException 
 	{
 			//Create this test case in Extent Report
@@ -135,7 +133,7 @@ public class NotesTestClass extends Base_Class
 				list_View.clickOnEditBtn();
 				
 				task.enterSubject(UtilityClass.fetchDataFromExcelSheet("Notes",2,3));
-				notes.selectKnight(driver, UtilityClass.fetchDataFromExcelSheet("Notes",2,6));
+				//notes.selectKnight(driver, UtilityClass.fetchDataFromExcelSheet("Notes",2,6));
 				create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("Notes", 1, 8));
 				create_Lead.scrollpage(driver);
 				create_Lead.clickOnSavebtn();
@@ -192,12 +190,12 @@ public class NotesTestClass extends Base_Class
 			System.out.println(filename);
 			int j=0,k=0;
 			String related = duplicate_task.getRelatedTo();
-			String arr1[]= {notes.getContactsName(), related, duplicate_task.getRelatedToDynamic(related), duplicate_task.getSubject(),notes.getUploadedFileName(),duplicate.getDescription(), notes.getKnightValue()};
+			String arr1[]= {notes.getContactsName(), related, duplicate_task.getRelatedToDynamic(related), duplicate_task.getSubject(),notes.getUploadedFileName(),duplicate.getDescription()/*, notes.getKnightValue()*/};
 			
 			String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Notes",1, 0),UtilityClass.fetchDataFromExcelSheet("Notes",1, 1),UtilityClass.fetchDataFromExcelSheet("Notes",1, 2),
-					UtilityClass.fetchDataFromExcelSheet("Notes",1, 3), filename, UtilityClass.fetchDataFromExcelSheet("Notes",1, 5),  UtilityClass.fetchDataFromExcelSheet("Notes",1, 6)};
+					UtilityClass.fetchDataFromExcelSheet("Notes",1, 3), filename, UtilityClass.fetchDataFromExcelSheet("Notes",1, 5)/*,  UtilityClass.fetchDataFromExcelSheet("Notes",1, 6)*/};
 			
-			for(int i=0;i<7;i++)
+			for(int i=0;i<6;i++)
 			{
 				
 				soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");

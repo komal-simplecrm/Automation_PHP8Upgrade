@@ -25,7 +25,7 @@ public class Add_Account
 			@FindBy(xpath="//input[@id='industry']")private WebElement Industry;
 			@FindBy(xpath="//input[@id='annual_revenue']")private WebElement AnnualRevenue;
 			@FindBy(xpath="//input[@id='employees']")private WebElement Employees;
-			@FindBy(xpath="//*[local-name()='svg' and @id='seach-btn-parent_name']")private WebElement MemberOfSearchIcon;
+			@FindBy(xpath="//*[local-name()='svg' and @id='search-btn-parent_name']")private WebElement MemberOfSearchIcon;
 			@FindBy(xpath="//div[@role='dialog']//input[@id='name']")private WebElement windowName;
 			@FindBy(xpath="//button[@form='relate-search-form']")private WebElement SearchBtnOnWindow;
 			

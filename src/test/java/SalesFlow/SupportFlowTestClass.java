@@ -81,7 +81,7 @@ public class SupportFlowTestClass extends Base_Class
 		cases.scrollUptoState(driver);
 		cases.selectType(driver, UtilityClass.fetchDataFromExcelSheet("Cases",1, 3));
 		add_Opportunities.enterAccountName(driver,UtilityClass.fetchDataFromExcelSheet("Cases",1, 4));
-		cases.clickOnGeneralFeedbackforSubject();
+		cases.clickOnGeneralFeedbackforSubject(driver,UtilityClass.fetchDataFromExcelSheet("Cases",1, 9));
 		String subject=duplicate_case.getSubject();
 		soft.assertNotNull(subject);
 		test.info(subject+ " Case is created.");
@@ -96,7 +96,7 @@ public class SupportFlowTestClass extends Base_Class
 		
 		//Diverted towards Calls module to schedule a call
 		test.info("Driver diverted towards Calls module");
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 		dashboard.clickOnMenuOption();
 		dashboard.clickOnSearch("Calls");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
@@ -110,20 +110,21 @@ public class SupportFlowTestClass extends Base_Class
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 		String subject1 = calls.enterSubject(UtilityClass.fetchDataFromExcelSheet("calls", 1, 0));
 		soft.assertNotNull(subject1);
-		test.info(subject+ " call is created");
+		test.info(subject+ " subject is entered");
+		create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("calls", 1, 8));
 		String status = calls.selectStatus(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 1));
 		soft.assertNotNull(status);
 		String date = task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 2), UtilityClass.fetchDataFromExcelSheet("calls", 1, 3));
 		soft.assertNotNull(date);
 		//create_Lead.scrollpage(driver);
 		task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 4), UtilityClass.fetchDataFromExcelSheet("calls", 1, 5));
-		String duration = calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("calls", 1, 6));
+		String duration = calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 6));
 		soft.assertNotNull(duration);
 		//calls.selectPopUpRadioBtn(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 7));
 		//Thread.sleep(3000);
 		//calls.selectEmailRadioBtn(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 7));
 		//Thread.sleep(3000);
-		create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("calls", 1, 8));
+		
 		create_Lead.scrollpage(driver);
 		create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 9));
 		Thread.sleep(3000);
@@ -140,7 +141,7 @@ public class SupportFlowTestClass extends Base_Class
 		
 		calls.selectEmailRadioBtnReminders(driver, UtilityClass.fetchDataFromExcelSheet("calls", 1, 10),0);
 		create_Lead.scrollpage(driver);
-		calls.enterCaller_id(UtilityClass.fetchDataFromExcelSheet("calls", 1, 11));
+		//calls.enterCaller_id(UtilityClass.fetchDataFromExcelSheet("calls", 1, 11));
 		//calls.scrollpageUpToSaveBottomBtn(driver);
 		create_Lead.clickOnSavebtn();
 		Thread.sleep(2000);
@@ -176,9 +177,9 @@ public class SupportFlowTestClass extends Base_Class
 		task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 4), UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 5));
 		
 		meeting.selectDateEnd(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 6), UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 7));
-		meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 20));
+		//meeting.enterLocation(UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 20));
 		//calls.enterDuration_Hours(UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 8));
-		meeting.selectDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 8));
+		calls.enterDuration(driver, UtilityClass.fetchDataFromExcelSheet("Meetings", 1, 8));
 		calls.scrollpageuptoDuration(driver);
 		calls.clickOnAdd_Reminder();
 		String a1[]= {"Users","Contacts","Leads"};
@@ -223,14 +224,14 @@ public class SupportFlowTestClass extends Base_Class
 		list_View.clickOnEditBtn();
 		//Hard code the assigned user
 		create_Lead.scrollpage(driver);
-		create_Lead.AssignedTo(driver,"rahul thakre");
+		create_Lead.AssignedTo(driver,"Rahul Thakre");
 		create_Lead.clickOnSavebtn();
 		
 		test.info("Case is assigned to Rahul Thakre successfully");	
-		test.info("Admin login with his user name and password on Edge browser.");	
+		test.info("Rahul Thakre login with his user name and password on Edge browser.");	
 		//Another User login - admin login
 		Thread.sleep(5000);
-		initializeBrowserForOpprotunitiesToFeedbackFlow("Edge","admin","simpleCRM@267");
+		initializeBrowserForOpprotunitiesToFeedbackFlow("Edge","Rahul Thakre","Rahul@123");
 		
 		cases = new Create_Case(Tempdriver);
 		list_View =new Lead_ListView(Tempdriver);

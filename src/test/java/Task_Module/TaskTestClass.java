@@ -79,20 +79,21 @@ public class TaskTestClass extends Base_Class
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 				String subject = task.enterSubject(UtilityClass.fetchDataFromExcelSheet("Tasks", i, 0));
 				soft.assertNotNull(subject);
-				
+				create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("Tasks", i, 10));
 				task.clickOnStatus(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 1));
 				task.selectStartDate(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 2),UtilityClass.fetchDataFromExcelSheet("Tasks", i, 3));
+				task.selectDueDate(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 6),UtilityClass.fetchDataFromExcelSheet("Tasks", i, 7));
+				create_Lead.scrollpage(driver);;
+				task.Estimate_Effort(UtilityClass.fetchDataFromExcelSheet("Tasks", i, 12));
+				task.Effort(UtilityClass.fetchDataFromExcelSheet("Tasks", i, 13));
+				task.selectPriority(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 9));
 				String related=task.clickRelatedTo(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 4),UtilityClass.fetchDataFromExcelSheet("Tasks", i, 5));
 				soft.assertNotNull(related);
 				soft.assertAll();
-				task.selectDueDate(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 6),UtilityClass.fetchDataFromExcelSheet("Tasks", i, 7));
-				task.enterContactName(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 8));
-				task.selectPriority(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 9));
-				create_Lead.enterDescription(UtilityClass.fetchDataFromExcelSheet("Tasks", i, 10));
-				create_Lead.scrollpage(driver);
 				create_Lead.AssignedTo(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 11));
+				task.enterContactName(driver, UtilityClass.fetchDataFromExcelSheet("Tasks", i, 8));
 				create_Lead.clickOnSavebtn();
-				test.info(subject+ " task is created.");
+				list_View.getAlertMessage(subject);
 				Thread.sleep(7000);
 				add_Opportunities.backToListView();
 				Thread.sleep(4000);
@@ -152,7 +153,7 @@ public class TaskTestClass extends Base_Class
 		
 	
 		//Create test case for Delete Task From List View
-		@Test( groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateTasks"})
+		@Test(groups = {"DeleteFromListView", "Sanity"}, dependsOnMethods={"CreateTasks"})
 		public void DeleteTaskFromListView() throws InterruptedException, EncryptedDocumentException, IOException 
 		{
 			CommonFunctions.DeleteRecordFromListView(list_View, add_Opportunities, "Automation Test Record4","Tasks" );
@@ -180,7 +181,7 @@ public class TaskTestClass extends Base_Class
 				{
 					
 					task.clickOnSubjectInListView(driver, input1);	
-					
+					Thread.sleep(5000);
 					list_View.menu(driver,"DUPLICATE");
 					//get Start Date 
 					String[] date = duplicate_task.getDateStart(); 
@@ -189,11 +190,11 @@ public class TaskTestClass extends Base_Class
 					String[] dateex=StartDate.split("-");
 					String month=dateex[1];
 					//convert date string to int
-					int m=Integer.parseInt(month);  
+					int m = Integer.parseInt(month);  
 					//get month name format MMM
 					String MonthName=UtilityClass.convertMonth(m);
 					//combine date dd-MMM-yyyy
-					String ExactstartDate=dateex[0]+"-"+MonthName+"-"+dateex[2];
+					String ExactstartDate = dateex[0]+"-"+MonthName+"-"+dateex[2];
 					
 					//get Start Time
 					String StartTime = date[1];
@@ -229,14 +230,14 @@ public class TaskTestClass extends Base_Class
 					String related = duplicate_task.getRelatedTo();
 					String arr1[]= {duplicate_task.getSubject(), duplicate_task.getStatus(),ExactstartDate,starttime,
 							related,duplicate_task.getRelatedToDynamic(related),ExactdueDate,Duetime,
-							duplicate_task.getContact_Name(),duplicate_task.getPriority(),duplicate.getDescription()};
+							duplicate_task.getContact_Name(),duplicate_task.getPriority(),duplicate.getDescription(),duplicate_task.getEstimatedEffort(), duplicate_task.getEffort() };
 					
 					String arr2[]= {UtilityClass.fetchDataFromExcelSheet("Tasks",1, 0),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 1),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 2),
 							UtilityClass.fetchDataFromExcelSheet("Tasks",1, 3),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 4),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 5),
 							UtilityClass.fetchDataFromExcelSheet("Tasks",1, 6),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 7),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 8),
-							UtilityClass.fetchDataFromExcelSheet("Tasks",1, 9),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 10)};
+							UtilityClass.fetchDataFromExcelSheet("Tasks",1, 9),UtilityClass.fetchDataFromExcelSheet("Tasks",1, 10), UtilityClass.fetchDataFromExcelSheet("Tasks",1, 12), UtilityClass.fetchDataFromExcelSheet("Tasks",1, 13)};
 					
-					for(int i=0;i<11;i++)
+					for(int i=0;i<13;i++)
 					{
 						
 						soft.assertEquals(arr1[j], arr2[k],"Failed: Both result are different");
